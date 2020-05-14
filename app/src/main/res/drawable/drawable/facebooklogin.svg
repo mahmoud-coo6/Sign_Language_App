@@ -1,0 +1,23 @@
+<svg data-name="Group Copy"
+    height="53"
+    id="prefix__Group_Copy"
+    viewBox="0 0 278 53"
+    width="278"
+    xmlns="http://www.w3.org/2000/svg">
+    <rect
+        style="fill:#344d91"
+        height="53"
+        id="prefix__Rectangle"
+        rx="26.5"
+        width="278" />
+    <text
+        style="fill:#fff;font-size:20px;font-family:SegoeUI,Segoe UI;letter-spacing:-.028em"
+        data-name="Facebook Login"
+        id="prefix__Facebook_Login"
+        transform="translate(139.5 34)">
+        <tspan
+            x="-65.7"
+            y="0">Facebook Login
+        </tspan>
+    </text>
+</svg>

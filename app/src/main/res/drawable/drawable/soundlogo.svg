@@ -1,0 +1,69 @@
+<svg height="150"
+    viewBox="0 0 121 150"
+    width="121"
+    xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <style>
+            .prefix__cls-4{stroke:none}.prefix__cls-5{fill:none}
+        </style>
+    </defs>
+    <g
+        data-name="Group 33"
+        id="prefix__Group_33"
+        transform="translate(-145.5 -187.5)">
+        <g
+            style="stroke:#707070;fill:#fe7081"
+            data-name="Rectangle 12"
+            id="prefix__Rectangle_12"
+            transform="translate(145.5 224.5)">
+            <rect
+                class="prefix__cls-4"
+                height="77"
+                rx="10"
+                width="23" />
+            <rect
+                class="prefix__cls-5"
+                height="76"
+                rx="9.5"
+                width="22"
+                x=".5"
+                y=".5" />
+        </g>
+        <g
+            style="fill:#88e498;stroke:#707070"
+            data-name="Rectangle 13"
+            id="prefix__Rectangle_13"
+            transform="translate(243.5 208.5)">
+            <rect
+                class="prefix__cls-4"
+                height="109"
+                rx="10"
+                width="23" />
+            <rect
+                class="prefix__cls-5"
+                height="108"
+                rx="9.5"
+                width="22"
+                x=".5"
+                y=".5" />
+        </g>
+        <g
+            style="fill:#d8d8d8;stroke:#707070"
+            data-name="Rectangle 14"
+            id="prefix__Rectangle_14"
+            transform="translate(194.5 187.5)">
+            <rect
+                class="prefix__cls-4"
+                height="150"
+                rx="10"
+                width="23" />
+            <rect
+                class="prefix__cls-5"
+                height="149"
+                rx="9.5"
+                width="22"
+                x=".5"
+                y=".5" />
+        </g>
+    </g>
+</svg>

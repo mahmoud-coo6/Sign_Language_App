@@ -1,0 +1,73 @@
+<svg height="7"
+    id="prefix__pageControl"
+    viewBox="0 0 126 7"
+    width="126"
+    xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <style>
+            .prefix__cls-1{fill:#fff;opacity:.28}
+        </style>
+    </defs>
+    <circle
+        class="prefix__cls-1"
+        cx="3.5"
+        cy="3.5"
+        id="prefix__Oval"
+        r="3.5" />
+    <circle
+        class="prefix__cls-1"
+        cx="3.5"
+        cy="3.5"
+        data-name="Oval Copy"
+        id="prefix__Oval_Copy"
+        r="3.5"
+        transform="translate(17)" />
+    <circle
+        style="fill:rgba(255,255,255,.28)"
+        cx="3.5"
+        cy="3.5"
+        data-name="Oval Copy 2"
+        id="prefix__Oval_Copy_2"
+        r="3.5"
+        transform="translate(34)" />
+    <circle
+        class="prefix__cls-1"
+        cx="3.5"
+        cy="3.5"
+        data-name="Oval Copy 3"
+        id="prefix__Oval_Copy_3"
+        r="3.5"
+        transform="translate(51)" />
+    <circle
+        style="fill:#fff"
+        cx="3.5"
+        cy="3.5"
+        data-name="Oval Copy 4"
+        id="prefix__Oval_Copy_4"
+        r="3.5"
+        transform="translate(68)" />
+    <circle
+        class="prefix__cls-1"
+        cx="3.5"
+        cy="3.5"
+        data-name="Oval Copy 5"
+        id="prefix__Oval_Copy_5"
+        r="3.5"
+        transform="translate(85)" />
+    <circle
+        class="prefix__cls-1"
+        cx="3.5"
+        cy="3.5"
+        data-name="Oval Copy 6"
+        id="prefix__Oval_Copy_6"
+        r="3.5"
+        transform="translate(102)" />
+    <circle
+        class="prefix__cls-1"
+        cx="3.5"
+        cy="3.5"
+        data-name="Oval Copy 7"
+        id="prefix__Oval_Copy_7"
+        r="3.5"
+        transform="translate(119)" />
+</svg>

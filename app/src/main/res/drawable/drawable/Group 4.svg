@@ -1,0 +1,27 @@
+<svg data-name="Group 4"
+    height="19.5"
+    id="Group_4"
+    viewBox="0 0 16 19.5"
+    width="16"
+    xmlns="http://www.w3.org/2000/svg">
+    <ellipse
+        cx="8"
+        cy="8.5"
+        fill="#d8d8d8"
+        id="Oval"
+        rx="8"
+        ry="8.5"
+        transform="translate(0 2.5)" />
+    <text
+        fill="#fff"
+        font-family="ArialMT, Arial"
+        font-size="15"
+        id="x"
+        letter-spacing="-0.024em"
+        transform="translate(11.5 14)">
+        <tspan
+            x="-7.5"
+            y="0">x
+        </tspan>
+    </text>
+</svg>

@@ -1,0 +1,23 @@
+<svg data-name="Group Copy"
+    height="38"
+    id="prefix__Group_Copy"
+    viewBox="0 0 278 38"
+    width="278"
+    xmlns="http://www.w3.org/2000/svg">
+    <rect
+        style="fill:#344d91"
+        height="38"
+        id="prefix__Rectangle"
+        rx="19"
+        width="278" />
+    <text
+        style="fill:#fff;font-size:20px;font-family:SegoeUI,Segoe UI;letter-spacing:-.028em"
+        data-name="Sign Up"
+        id="prefix__Sign_Up"
+        transform="translate(139.5 26)">
+        <tspan
+            x="-33.099"
+            y="0">Sign Up
+        </tspan>
+    </text>
+</svg>

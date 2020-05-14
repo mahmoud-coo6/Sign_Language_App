@@ -1,0 +1,41 @@
+<svg height="42"
+    viewBox="0 0 68 42"
+    width="68"
+    xmlns="http://www.w3.org/2000/svg">
+    <g
+        data-name="Group 38"
+        id="Group_38"
+        transform="translate(-285.5 -729.5)">
+        <g
+            data-name="Rectangle 18"
+            fill="#fff"
+            id="Rectangle_18"
+            stroke="#707070"
+            stroke-width="1"
+            transform="translate(285.5 729.5)">
+            <rect
+                height="42"
+                rx="20"
+                stroke="none"
+                width="68" />
+            <rect
+                fill="none"
+                height="41"
+                rx="19.5"
+                width="67"
+                x="0.5"
+                y="0.5" />
+        </g>
+        <text
+            font-family="SegoeUI, Segoe UI"
+            font-size="20"
+            id="skip"
+            letter-spacing="0.017em"
+            transform="translate(319.5 758.5)">
+            <tspan
+                x="-18.025"
+                y="0">skip
+            </tspan>
+        </text>
+    </g>
+</svg>

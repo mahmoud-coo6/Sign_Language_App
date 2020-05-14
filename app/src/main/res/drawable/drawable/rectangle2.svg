@@ -1,0 +1,21 @@
+<svg height="53"
+    viewBox="0 0 323 53"
+    width="323"
+    xmlns="http://www.w3.org/2000/svg">
+    <g
+        style="stroke:#374b6d;stroke-miterlimit:10;opacity:.338;fill:none"
+        id="prefix__Rectangle">
+        <rect
+            style="stroke:none"
+            height="53"
+            rx="26.5"
+            width="323" />
+        <rect
+            style="fill:none"
+            height="52"
+            rx="26"
+            width="322"
+            x=".5"
+            y=".5" />
+    </g>
+</svg>

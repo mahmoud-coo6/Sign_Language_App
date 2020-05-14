@@ -1,0 +1,33 @@
+<svg data-name="Group Copy"
+    height="53"
+    id="prefix__Group_Copy"
+    viewBox="0 0 278 53"
+    width="278"
+    xmlns="http://www.w3.org/2000/svg">
+    <g
+        style="stroke:#374b6d;stroke-miterlimit:10;fill:none"
+        id="prefix__Rectangle">
+        <rect
+            style="stroke:none"
+            height="53"
+            rx="26.5"
+            width="278" />
+        <rect
+            style="fill:none"
+            height="52"
+            rx="26"
+            width="277"
+            x=".5"
+            y=".5" />
+    </g>
+    <text
+        style="fill:#374b6d;font-size:20px;font-family:SegoeUI,Segoe UI;letter-spacing:-.028em"
+        data-name="Sign Up"
+        id="prefix__Sign_Up"
+        transform="translate(139.5 34)">
+        <tspan
+            x="-33.099"
+            y="0">Sign Up
+        </tspan>
+    </text>
+</svg>

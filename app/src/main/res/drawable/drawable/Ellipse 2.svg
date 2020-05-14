@@ -1,0 +1,22 @@
+<svg height="546"
+    viewBox="0 0 546 546"
+    width="546"
+    xmlns="http://www.w3.org/2000/svg">
+    <g
+        data-name="Ellipse 2"
+        fill="rgba(255,255,255,0.73)"
+        id="Ellipse_2"
+        stroke="#707070"
+        stroke-width="1">
+        <circle
+            cx="273"
+            cy="273"
+            r="273"
+            stroke="none" />
+        <circle
+            cx="273"
+            cy="273"
+            fill="none"
+            r="272.5" />
+    </g>
+</svg>

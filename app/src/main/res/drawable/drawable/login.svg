@@ -1,0 +1,22 @@
+<svg height="53"
+    id="prefix__Group"
+    viewBox="0 0 278 53"
+    width="278"
+    xmlns="http://www.w3.org/2000/svg">
+    <rect
+        style="fill:#344d91"
+        height="53"
+        id="prefix__Rectangle"
+        rx="26.5"
+        width="278" />
+    <text
+        style="fill:#fff;font-size:20px;font-family:SegoeUI,Segoe UI;letter-spacing:-.028em"
+        data-name="Log In"
+        id="prefix__Log_In"
+        transform="translate(139.5 34)">
+        <tspan
+            x="-26.122"
+            y="0">Log In
+        </tspan>
+    </text>
+</svg>
