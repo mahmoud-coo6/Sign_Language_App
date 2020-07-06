@@ -1,2 +1,3 @@
 rootProject.name='Sign Language App'
 include ':app'
+include ':openCVLibrary348'

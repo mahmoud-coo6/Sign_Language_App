@@ -8,13 +8,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -28,6 +25,9 @@ public class Category extends Fragment {
     CategrayAdapter categrayAdapter;
     EditText search;
     List<CategoryItem> categoryList = new ArrayList<>();
+    RecyclerView recyclerView;
+    ArrayList<String> content = new ArrayList<>();
+    CategrayAdapter.OnItemClickListener listener;
     private View categoryFragment;
     private Toolbar toolbar;
 
@@ -37,50 +37,125 @@ public class Category extends Fragment {
         categoryFragment = inflater.inflate(R.layout.category, container, false);
         toolbar = categoryFragment.findViewById(R.id.toolbar);
 
-        int columns = 2;
-        RecyclerView recyclerView = categoryFragment.findViewById(R.id.category_rv);
-        LinearLayoutManager layoutManager = new GridLayoutManager(getActivity(), columns);
-        recyclerView.setLayoutManager(layoutManager);
-        categoryList.add(new CategoryItem("Alphaptic", R.drawable.numbercategory));
-        categoryList.add(new CategoryItem("Number", R.drawable.numbercategory));
-        categrayAdapter = new CategrayAdapter(getActivity(), categoryList);
-        recyclerView.setAdapter(categrayAdapter);
-        search = categoryFragment.findViewById(R.id.search_field);
-
-        categrayAdapter.setOnItemClickListener(new CategrayAdapter.OnItemClickListener() {
+        listener = new CategrayAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-//                changeItem(position);
-                Log.d("TAG cliksfsdfas"+position, "onItemClick: ");
+                Log.d("TAG cliksfsdfas" + position, "onItemClick: ");
                 Intent intent;
 
-                    Fragment fragment = new CategoryList();
-                    FragmentTransaction transaction =getActivity().getSupportFragmentManager().beginTransaction();
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("item", position);
-                    fragment.setArguments(bundle);
-                    transaction.replace(R.id.frame_container, fragment);
-                    transaction.setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-//        transaction.addToBackStack(null);
-                    transaction.commit();
+                Fragment fragment = new CategoryList();
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                Bundle bundle = new Bundle();
+                bundle.putInt("item", position);
+                fragment.setArguments(bundle);
+                transaction.replace(R.id.frame_container, fragment);
+                transaction.setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+
+                transaction.commit();
+            }
+        };
+
+        int columns = 2;
+        recyclerView = categoryFragment.findViewById(R.id.category_rv);
+        LinearLayoutManager layoutManager = new GridLayoutManager(getActivity(), columns);
+        recyclerView.setLayoutManager(layoutManager);
+        content.add("Alphaptic");
+        content.add("Number");
+        categoryList.add(new CategoryItem("Alphaptic", R.drawable.ic_alphabet));
+        categoryList.add(new CategoryItem("Number", R.drawable.ic_number));
+        categrayAdapter = new CategrayAdapter(getActivity(), categoryList);
+        categrayAdapter.setOnItemClickListener(listener);
+        recyclerView.setAdapter(categrayAdapter);
+        search = categoryFragment.findViewById(R.id.search_field);
+        search.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+
+                filter(s.toString());
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
             }
         });
-        
 
-//        search.addTextChangedListener(new TextWatcher() {
-//
-//            public void afterTextChanged(Editable s) {
-//                // you can call or do what you want with your EditText here
-//            }
-//
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//            }
-//
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-////                initSearch(search.getText().toString());
-//            }
-//        });
 
         return categoryFragment;
+    }
+
+
+    private void filter(String text) {
+
+        text = text.toLowerCase();
+        boolean found0 = false, found1 = false;
+
+
+        if (text.isEmpty()) {
+            createData();
+
+        } else {
+
+
+            if ("Alphaptic".toLowerCase().contains(text.toLowerCase())) {
+                found0 = true;
+
+            }
+            if ("Number".toLowerCase().contains(text.toLowerCase())) {
+                found1 = true;
+
+            }
+
+            if ((found0 && found1)) {
+                createData();
+            } else if (found0) {
+                createData(0);
+            } else if (found1) {
+                createData(1);
+            } else {
+                createData();
+
+            }
+
+
+        }
+
+
+        categrayAdapter.notifyDataSetChanged();
+
+    }
+
+    public void createData() {
+        recyclerView = categoryFragment.findViewById(R.id.category_rv);
+        LinearLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
+        recyclerView.setLayoutManager(layoutManager);
+        categoryList.clear();
+
+
+        categoryList.add(new CategoryItem("Alphaptic", R.drawable.ic_alphabet));
+        categoryList.add(new CategoryItem("Number", R.drawable.ic_number));
+        categrayAdapter = new CategrayAdapter(getActivity(), categoryList);
+        categrayAdapter.setOnItemClickListener(listener);
+        recyclerView.setAdapter(categrayAdapter);
+        categrayAdapter.notifyDataSetChanged();
+    }
+
+    public void createData(int type) {
+        recyclerView = categoryFragment.findViewById(R.id.category_rv);
+        LinearLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
+        recyclerView.setLayoutManager(layoutManager);
+        categoryList.clear();
+        if (type == 0) {
+            categoryList.add(new CategoryItem("Alphaptic", R.drawable.ic_alphabet));
+        } else if (type == 1) {
+            categoryList.add(new CategoryItem("Number", R.drawable.ic_number));
+        }
+
+        categrayAdapter = new CategrayAdapter(getActivity(), categoryList);
+        categrayAdapter.setOnItemClickListener(listener);
+        recyclerView.setAdapter(categrayAdapter);
+        categrayAdapter.notifyDataSetChanged();
     }
 }

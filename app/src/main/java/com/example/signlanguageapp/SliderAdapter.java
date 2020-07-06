@@ -68,29 +68,26 @@ public class SliderAdapter extends
                 view.getContext().startActivity(intent);
             }
         });
-//        Glide.with(viewHolder.itemView)
-//                .load(sliderItem.getImageUrl())
-//                .fitCenter()
-//                .into(viewHolder.imageViewBackground);
+
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Toast.makeText(context, "This is item in position " + position, Toast.LENGTH_SHORT).show();
+
             }
         });
     }
 
     @Override
     public int getCount() {
-        //slider view count could be dynamic size
+
         return mSliderItems.size();
     }
 
     class SliderAdapterVH extends SliderViewAdapter.ViewHolder {
 
         View itemView;
-        //        ImageView imageViewBackground;
+
         ImageView imageGifContainer;
         TextView textViewDescription;
         TextView textViewTitle;
@@ -98,7 +95,7 @@ public class SliderAdapter extends
 
         public SliderAdapterVH(View itemView) {
             super(itemView);
-//            imageViewBackground = itemView.findViewById(R.id.iv_auto_image_slider);
+
             imageGifContainer = itemView.findViewById(R.id.logo);
             textViewDescription = itemView.findViewById(R.id.description);
             textViewTitle = itemView.findViewById(R.id.title);

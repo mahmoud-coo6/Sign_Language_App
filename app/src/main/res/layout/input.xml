@@ -1,126 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:fillViewport="true">
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/white">
-
-    <LinearLayout
-        android:id="@+id/input"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="10"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="64dp"
-        >
+        android:layout_height="match_parent"
+        android:background="@android:color/white">
 
-    <LinearLayout
-        android:id="@+id/linearLayout7"
-        android:layout_width="0dp"
-        android:layout_weight="9"
-        android:layout_height="wrap_content"
-        android:focusable="true" android:focusableInTouchMode="true">
-
-        <EditText
-            android:id="@+id/text_input"
-            android:layout_width="0dp"
-            android:layout_weight="9"
+        <LinearLayout
+            android:id="@+id/input"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="start|center"
-            android:hint="Enter Text"
-            android:padding="16dp"
-            android:textSize="16sp"
-            />
+            android:layout_marginTop="64dp"
+            android:weightSum="10"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    </LinearLayout>
+            <LinearLayout
+                android:id="@+id/linearLayout7"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="9"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
 
+                <EditText
+                    android:id="@+id/text_input"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="9"
+                    android:gravity="start|center"
+                    android:hint="Enter Text"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:padding="16dp"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="@android:color/darker_gray"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+
+            <ImageView
+                android:id="@+id/translate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:padding="8dp"
+                android:src="@drawable/text" />
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/input">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/sound_text_rv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
         <ImageView
-            android:id="@+id/translate"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:padding="8dp"
-            android:layout_gravity="center"
-            android:layout_height="wrap_content"
-            android:src="@drawable/text"
-            />
-
-    </LinearLayout>
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/content"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/input">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/sound_text_rv"
+            android:id="@+id/current_letter_image"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="250dp"
+            android:layout_marginBottom="170dp"
+            android:padding="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/content" />
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+        <TextView
+            android:id="@+id/current_letter_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center_horizontal"
+            android:lineSpacingExtra="110sp"
+            android:text=""
+            android:textColor="@android:color/holo_blue_dark"
+            android:textSize="64sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/current_letter_image" />
 
-    <ImageView
-        android:id="@+id/current_letter_image"
-        android:layout_width="wrap_content"
-        android:layout_height="250dp"
-        android:layout_marginBottom="170dp"
-        android:padding="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/content" />
+        <ImageView
+            android:id="@+id/back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="56dp"
+            android:padding="16dp"
+            android:src="@drawable/back"
+            app:layout_constraintEnd_toStartOf="@id/current_letter_text"
+            app:layout_constraintTop_toBottomOf="@+id/current_letter_image" />
 
-    <TextView
-        android:id="@+id/current_letter_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:gravity="center_horizontal"
-        android:lineSpacingExtra="110sp"
-        android:text=""
-        android:textColor="@android:color/holo_blue_dark"
-        android:textSize="64sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/current_letter_image" />
+        <ImageView
+            android:id="@+id/forword_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="56dp"
+            android:layout_marginTop="32dp"
+            android:padding="16dp"
+            android:rotation="180"
+            android:src="@drawable/back"
+            app:layout_constraintStart_toEndOf="@id/current_letter_text"
+            app:layout_constraintTop_toBottomOf="@id/current_letter_image" />
 
-    <ImageView
-        android:id="@+id/back_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="56dp"
-        android:layout_marginTop="32dp"
-        android:padding="16dp"
-        android:src="@drawable/back"
-        app:layout_constraintEnd_toStartOf="@id/current_letter_text"
-        app:layout_constraintTop_toBottomOf="@+id/current_letter_image" />
-
-    <ImageView
-        android:id="@+id/forword_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:rotation="180"
-        android:src="@drawable/back"
-        android:layout_marginStart="56dp"
-        android:layout_marginTop="32dp"
-        app:layout_constraintStart_toEndOf="@id/current_letter_text"
-        app:layout_constraintTop_toBottomOf="@id/current_letter_image"
-        />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

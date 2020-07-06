@@ -18,9 +18,6 @@ public class VideoFragment extends Fragment {
 
         return myVideoFragment;
     }
-//    @Override
-//    public void onDestroyView() {
-//        super.onDestroyView();
-//        myVideoFragment = null;
-//    }
+
+
 }

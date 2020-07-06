@@ -10,4 +10,8 @@
     <color name="textColorPrimary">#000000</color>
     <color name="windowBackground">#FFFFFF</color>
     <color name="navigationBarColor">#000000</color>
+    <color name="bgBottomNavigation">#3A6FF3</color>
+    <color name="red">#ff00</color>
+    <color name="green">#f0f0</color>
+
 </resources>

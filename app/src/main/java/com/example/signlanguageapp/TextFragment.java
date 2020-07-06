@@ -1,5 +1,6 @@
 package com.example.signlanguageapp;
 
+import android.app.Activity;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -8,11 +9,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,7 +21,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class TextFragment extends Fragment {
 
@@ -29,13 +28,24 @@ public class TextFragment extends Fragment {
     TextView textView;
     ImageView imageView, translate, back, forword;
     EditText editText;
-//    SoundTextAdapter soundTextAdapter;
+
     TextAdapter textAdapter;
-    private View myTextFragment;
     RecyclerView recyclerView;
     String imageUrl;
     TextView holder;
     int currentPosition;
+    private View myTextFragment;
+
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+
+        View view = activity.getCurrentFocus();
+
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,9 +62,25 @@ public class TextFragment extends Fragment {
         forword.setVisibility(View.INVISIBLE);
         recyclerView = myTextFragment.findViewById(R.id.sound_text_rv);
 
+
+        try {
+            if (getArguments().getString("result") != null && getArguments().getString("result").trim().length() != 0) {
+                translate.setVisibility(View.GONE);
+                editText.setVisibility(View.GONE);
+                editText.setText(getArguments().getString("result"));
+                getTextInput(textView);
+            }
+        } catch (Exception e) {
+
+        }
+
+
         translate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                hideKeyboard(getActivity());
+
                 getTextInput(v);
             }
         });
@@ -65,7 +91,7 @@ public class TextFragment extends Fragment {
                 moveNext(v);
             }
         });
-//
+
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,8 +104,8 @@ public class TextFragment extends Fragment {
 
     private void moveNext(View v) {
         currentPosition += 1;
-        if (currentPosition <= textList.size()-1){
-            for (int i=0; i<= textList.size()-1; i++) {
+        if (currentPosition <= textList.size() - 1) {
+            for (int i = 0; i <= textList.size() - 1; i++) {
                 if (currentPosition != i) {
                     holder = recyclerView.findViewHolderForAdapterPosition(i).itemView.findViewById(R.id.item);
                     holder.setBackgroundTintMode(PorterDuff.Mode.ADD);
@@ -89,20 +115,18 @@ public class TextFragment extends Fragment {
             }
 
             textAdapter.notifyDataSetChanged();
-            imageUrl= "https://res.cloudinary.com/dwpo5xilm/image/upload/v1582724492/sick-fits/"+String.valueOf(editText.getText().charAt(currentPosition)).toUpperCase()+".png";
+            imageUrl = "https://res.cloudinary.com/dwpo5xilm/image/upload/v1582724492/sick-fits/" + String.valueOf(editText.getText().charAt(currentPosition)).toUpperCase() + ".png";
+
             Picasso.get().load(imageUrl).error(R.drawable.placeholder)
                     .placeholder(R.drawable.placeholder).into(imageView);
 
             textView.setText(String.valueOf(editText.getText().charAt(currentPosition)).toUpperCase());
             textAdapter.notifyDataSetChanged();
 
-            recyclerView.postDelayed(new Runnable()
-            {
+            recyclerView.postDelayed(new Runnable() {
                 @Override
-                public void run()
-                {
-                    if(recyclerView.findViewHolderForAdapterPosition(0)!=null )
-                    {
+                public void run() {
+                    if (recyclerView.findViewHolderForAdapterPosition(0) != null) {
 
                         holder = recyclerView.findViewHolderForAdapterPosition(currentPosition).itemView.findViewById(R.id.item);
                         holder.setBackgroundTintMode(PorterDuff.Mode.ADD);
@@ -111,18 +135,19 @@ public class TextFragment extends Fragment {
 
                     }
                 }
-            },50);
+            }, 50);
 
             textAdapter.notifyItemChanged(currentPosition);
-            Log.d("TAG", "changeItem: i="+textList.size()+" position="+currentPosition);
+            Log.d("TAG", "changeItem: i=" + textList.size() + " position=" + currentPosition);
 
         }
 
     }
+
     private void moveBack(View v) {
         currentPosition -= 1;
-        if (currentPosition >= 0){
-            for (int i=0; i<= textList.size()-1; i++) {
+        if (currentPosition >= 0) {
+            for (int i = 0; i <= textList.size() - 1; i++) {
                 if (currentPosition != i) {
                     holder = recyclerView.findViewHolderForAdapterPosition(i).itemView.findViewById(R.id.item);
                     holder.setBackgroundTintMode(PorterDuff.Mode.ADD);
@@ -132,20 +157,22 @@ public class TextFragment extends Fragment {
             }
 
             textAdapter.notifyDataSetChanged();
-            imageUrl= "https://res.cloudinary.com/dwpo5xilm/image/upload/v1582724492/sick-fits/"+String.valueOf(editText.getText().charAt(currentPosition)).toUpperCase()+".png";
-            Picasso.get().load(imageUrl).error(R.drawable.placeholder)
-                    .placeholder(R.drawable.placeholder).into(imageView);
+            imageUrl = "https://res.cloudinary.com/dwpo5xilm/image/upload/v1582724492/sick-fits/" + String.valueOf(editText.getText().charAt(currentPosition)).toUpperCase() + ".png";
+            try {
+                Picasso.get().load(imageUrl).error(R.drawable.placeholder)
+                        .placeholder(R.drawable.placeholder).into(imageView);
+            } catch (Exception e) {
+
+            }
+
 
             textView.setText(String.valueOf(editText.getText().charAt(currentPosition)).toUpperCase());
             textAdapter.notifyDataSetChanged();
 
-            recyclerView.postDelayed(new Runnable()
-            {
+            recyclerView.postDelayed(new Runnable() {
                 @Override
-                public void run()
-                {
-                    if(recyclerView.findViewHolderForAdapterPosition(0)!=null )
-                    {
+                public void run() {
+                    if (recyclerView.findViewHolderForAdapterPosition(0) != null) {
 
                         holder = recyclerView.findViewHolderForAdapterPosition(currentPosition).itemView.findViewById(R.id.item);
                         holder.setBackgroundTintMode(PorterDuff.Mode.ADD);
@@ -154,36 +181,34 @@ public class TextFragment extends Fragment {
 
                     }
                 }
-            },50);
+            }, 50);
 
             textAdapter.notifyItemChanged(currentPosition);
-            Log.d("TAG", "changeItem: i="+textList.size()+" position="+currentPosition);
+            Log.d("TAG", "changeItem: i=" + textList.size() + " position=" + currentPosition);
 
         }
     }
+
     private void getTextInput(View v) {
         textList.clear();
         for (int i = 0; i < editText.getText().toString().length(); i++) {
             textList.add(String.valueOf(editText.getText().charAt(i)));
         }
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-         textAdapter = new TextAdapter(getActivity(),textList);
-         recyclerView.setAdapter(textAdapter);
+        textAdapter = new TextAdapter(getActivity(), textList);
+        recyclerView.setAdapter(textAdapter);
 
-        imageUrl= "https://res.cloudinary.com/dwpo5xilm/image/upload/v1582724492/sick-fits/"+String.valueOf(editText.getText().charAt(0)).toUpperCase()+".png";
+        imageUrl = "https://res.cloudinary.com/dwpo5xilm/image/upload/v1582724492/sick-fits/" + String.valueOf(editText.getText().charAt(currentPosition)).toUpperCase() + ".png";
         Picasso.get().load(imageUrl).error(R.drawable.placeholder)
                 .placeholder(R.drawable.placeholder).into(imageView);
 
         back.setVisibility(View.VISIBLE);
         forword.setVisibility(View.VISIBLE);
 
-        recyclerView.postDelayed(new Runnable()
-        {
+        recyclerView.postDelayed(new Runnable() {
             @Override
-            public void run()
-            {
-                if(recyclerView.findViewHolderForAdapterPosition(0)!=null )
-                {
+            public void run() {
+                if (recyclerView.findViewHolderForAdapterPosition(0) != null) {
 
                     holder = recyclerView.findViewHolderForAdapterPosition(0).itemView.findViewById(R.id.item);
                     holder.setBackgroundTintMode(PorterDuff.Mode.ADD);
@@ -192,9 +217,9 @@ public class TextFragment extends Fragment {
 
                 }
             }
-        },50);
+        }, 50);
 
-        currentPosition =0;
+        currentPosition = 0;
         textAdapter.notifyItemChanged(0);
         textView.setText(String.valueOf(editText.getText().charAt(0)).toUpperCase());
 
@@ -208,42 +233,33 @@ public class TextFragment extends Fragment {
 
     public void changeItem(final int position) {
 
-        currentPosition =position;
+        currentPosition = position;
 
-        for (int i=0; i<= textList.size()-1; i++) {
+        for (int i = 0; i <= textList.size() - 1; i++) {
             if (position != i) {
                 holder = recyclerView.findViewHolderForAdapterPosition(i).itemView.findViewById(R.id.item);
                 holder.setBackgroundTintMode(PorterDuff.Mode.ADD);
                 holder.setTextColor(ColorStateList.valueOf(Color.BLACK));
                 holder.setBackgroundTintList(ColorStateList.valueOf(Color.BLACK));
             }
-//            else {
-//                holder = recyclerView.findViewHolderForAdapterPosition(i).itemView.findViewById(R.id.item);
-//                holder.setBackgroundTintMode(PorterDuff.Mode.ADD);
-//                holder.setTextColor(ColorStateList.valueOf(Color.BLUE));
-//                holder.setBackgroundTintList(ColorStateList.valueOf(Color.BLUE));
-//            }
-//            textAdapter.notifyItemChanged(i);
+
 
         }
 
         textAdapter.notifyDataSetChanged();
 
-            imageUrl= "https://res.cloudinary.com/dwpo5xilm/image/upload/v1582724492/sick-fits/"+String.valueOf(editText.getText().charAt(position)).toUpperCase()+".png";
-            Picasso.get().load(imageUrl).error(R.drawable.placeholder)
-                    .placeholder(R.drawable.placeholder).into(imageView);
+        imageUrl = "https://res.cloudinary.com/dwpo5xilm/image/upload/v1582724492/sick-fits/" + String.valueOf(editText.getText().charAt(currentPosition)).toUpperCase() + ".png";
+        Picasso.get().load(imageUrl).error(R.drawable.placeholder)
+                .placeholder(R.drawable.placeholder).into(imageView);
 
-            textView.setText(String.valueOf(editText.getText().charAt(position)).toUpperCase());
+        textView.setText(String.valueOf(editText.getText().charAt(position)).toUpperCase());
 
-        Log.d("TAG changessfdf", "changeItem: i="+textList.size()+" position="+position);
-//        textAdapter.notifyDataSetChanged();
-        recyclerView.postDelayed(new Runnable()
-        {
+        Log.d("TAG changessfdf", "changeItem: i=" + textList.size() + " position=" + position);
+
+        recyclerView.postDelayed(new Runnable() {
             @Override
-            public void run()
-            {
-                if(recyclerView.findViewHolderForAdapterPosition(0)!=null )
-                {
+            public void run() {
+                if (recyclerView.findViewHolderForAdapterPosition(0) != null) {
 
                     holder = recyclerView.findViewHolderForAdapterPosition(position).itemView.findViewById(R.id.item);
                     holder.setBackgroundTintMode(PorterDuff.Mode.ADD);
@@ -252,12 +268,9 @@ public class TextFragment extends Fragment {
 
                 }
             }
-        },50);
+        }, 50);
 
-//        holder = recyclerView.findViewHolderForAdapterPosition(position).itemView.findViewById(R.id.item);
-//        holder.setBackgroundTintMode(PorterDuff.Mode.ADD);
-//        holder.setTextColor(ColorStateList.valueOf(Color.BLUE));
-//        holder.setBackgroundTintList(ColorStateList.valueOf(Color.BLUE));
+
         textAdapter.notifyItemChanged(position);
 
     }

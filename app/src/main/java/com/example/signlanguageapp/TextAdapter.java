@@ -1,43 +1,33 @@
 package com.example.signlanguageapp;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TextAdapter extends RecyclerView.Adapter<TextAdapter.CategoryVh> {
-    //    public static final String CATEGORY_TRANSFER = "CATEGORY_TRANSFER";
-//    public static final String CATEGORY_POSITION = "CATEGORY_POSITION";
+
+
     Context context;
     List<String> soundTextList;
-//    List<String> secondContainer;
-//    int prevoise = -1, current;
-//    AdapterView.OnItemClickListener mListener;
+
+
     private OnItemClickListener mListener;
 
-    public interface OnItemClickListener {
-        void onItemClick(int position);
+    public TextAdapter(Context context, List<String> soundTextList) {
+        this.context = context;
+        this.soundTextList = soundTextList;
+
     }
 
     public void setOnItemClickListener(TextAdapter.OnItemClickListener listener) {
         mListener = listener;
-    }
-    public TextAdapter(Context context, List<String> soundTextList) {
-        this.context = context;
-        this.soundTextList = soundTextList;
-//        secondContainer = soundTextList;
     }
 
     @NonNull
@@ -58,6 +48,9 @@ public class TextAdapter extends RecyclerView.Adapter<TextAdapter.CategoryVh> {
         return soundTextList.size();
     }
 
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
 
     class CategoryVh extends RecyclerView.ViewHolder {
         TextView sound_text_name;
@@ -78,19 +71,9 @@ public class TextAdapter extends RecyclerView.Adapter<TextAdapter.CategoryVh> {
                 @Override
                 public void onClick(View v) {
 
-//                    int num= Integer.parseInt(sound_text_name.getTag().toString()) ;
-//                    prevoise= num;
-
-//                    for (int i=0; i<soundTextList.size(); i++){
-//                        holder.setDefault(soundTextList.get(i), i, holder);
-//                    }
-
-//                    sound_text_name.setBackgroundTintMode(PorterDuff.Mode.ADD);
-//                    sound_text_name.setTextColor(ColorStateList.valueOf(Color.BLUE));
-//                    sound_text_name.setBackgroundTintList(ColorStateList.valueOf(Color.BLUE));
 
                     if (mListener != null) {
-//                        int position = getAdapterPosition();
+
                         if (position != RecyclerView.NO_POSITION) {
                             mListener.onItemClick(position);
                         }
@@ -102,13 +85,5 @@ public class TextAdapter extends RecyclerView.Adapter<TextAdapter.CategoryVh> {
         }
 
 
-//        public void setDefault(final String item, final int position, final CategoryVh holder) {
-//            sound_text_name.setText(soundTextList.get(position));
-//            sound_text_name.setTag(position);
-//
-//            sound_text_name.setBackgroundTintMode(PorterDuff.Mode.ADD);
-//            sound_text_name.setTextColor(ColorStateList.valueOf(Color.BLACK));
-//            sound_text_name.setBackgroundTintList(ColorStateList.valueOf(Color.BLACK));
-//        }
     }
 }

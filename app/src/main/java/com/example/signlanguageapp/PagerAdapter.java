@@ -20,15 +20,17 @@ class PagerAdapter extends FragmentPagerAdapter {
         if (position == 0) {
             return new TextFragment();
         } else if (position == 1) {
-            return new ImageFragment();
+
+            return new VideosFragment();
         } else {
-            return new SoundFragment();
+
+            return new RecognitionActivity();
         }
     }
 
     @Override
     public int getCount() {
-        return 4;
+        return 3;
     }
 
     @Override
@@ -36,9 +38,9 @@ class PagerAdapter extends FragmentPagerAdapter {
         if (position == 0) {
             return "Text";
         } else if (position == 1) {
-            return "Image";
-        }  else {
             return "Sound";
+        } else {
+            return "Image";
         }
     }
 

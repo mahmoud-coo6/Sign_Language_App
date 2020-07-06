@@ -30,13 +30,13 @@ public class Input extends Fragment {
 
     private int[] tabIcons = {
             R.drawable.text,
-            R.drawable.image,
-            R.drawable.ic_sound
+            R.drawable.video,
+            R.drawable.image
     };
     private String[] tabTitles = {
             "Text",
-            "Image",
-            "Sound"
+            "Video",
+            "Image"
     };
 
     @Override
@@ -81,20 +81,12 @@ public class Input extends Fragment {
     public void setupTabIconsTap3() {
         TextView tabContent = setupTabIcons();
         tabContent.setText(tabTitles[2]);
-        tabContent.setCompoundDrawablePadding(6);
+        tabContent.setCompoundDrawablePadding(4);
         tabContent.setTextColor(Color.BLACK);
         tabContent.setCompoundDrawablesWithIntrinsicBounds(tabIcons[2], 0, 0, 0);
         tabLayout.getTabAt(2).setCustomView(tabContent);
     }
 
-//    public void setupTabIconsTap4() {
-//        TextView tabContent = setupTabIcons();
-//        tabContent.setText(tabTitles[3]);
-//        tabContent.setCompoundDrawablePadding(5);
-//        tabContent.setTextColor(Color.BLACK);
-//        tabContent.setCompoundDrawablesWithIntrinsicBounds(tabIcons[3], 0, 0, 0);
-//        tabLayout.getTabAt(3).setCustomView(tabContent);
-//    }
 
     private TextView setupTabIcons() {
         LinearLayout tabLinearLayout = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
@@ -104,12 +96,13 @@ public class Input extends Fragment {
     }
 
     private void setupViewPager(ViewPager viewPager) {
-//        adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
+
         adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFrag(new TextFragment(), "Text");
-        adapter.addFrag(new ImageFragment(), "Image");
-//        adapter.addFrag(new VideoFragment(), "Video");
-        adapter.addFrag(new SoundFragment(), "Sound");
+        adapter.addFrag(new VideosFragment(), "Video");
+        adapter.addFrag(new RecognitionActivity(), "Image");
+
+
         viewPager.setAdapter(adapter);
     }
 

@@ -1,7 +1,7 @@
 package com.example.signlanguageapp;
 
 import android.app.Activity;
-import android.util.Log;
+import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,12 +11,11 @@ import android.widget.CheckedTextView;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.squareup.picasso.Picasso;
-
-import java.security.AccessController;
-import java.util.ArrayList;
 
 public class MyExpandableListAdapter extends BaseExpandableListAdapter {
 
@@ -53,14 +52,24 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
         text = convertView.findViewById(R.id.textView1);
         imageView = convertView.findViewById(R.id.image);
         text.setText(children);
-        image= "https://res.cloudinary.com/dwpo5xilm/image/upload/v1582724492/sick-fits/"+children+".png";
+        image = "https://res.cloudinary.com/dwpo5xilm/image/upload/v1582724492/sick-fits/" + children + ".png";
         Picasso.get().load(image).error(R.drawable.placeholder)
                 .placeholder(R.drawable.placeholder).into(imageView);
+
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(activity, children,
-                        Toast.LENGTH_SHORT).show();
+                Bundle bundle = new Bundle();
+
+                bundle.putString("result", children);
+                SearchResult searchResult = new SearchResult();
+                searchResult.setArguments(bundle);
+                FragmentTransaction transaction = ((FragmentActivity) v.getContext()).getSupportFragmentManager().beginTransaction();
+
+
+                transaction.replace(R.id.frame_container, searchResult);
+                transaction.setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                transaction.commit();
             }
         });
         return convertView;
@@ -104,7 +113,7 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
         }
         Group group = (Group) getGroup(groupPosition);
         ((CheckedTextView) convertView).setText(group.string);
-//        ((CheckedTextView) convertView).setChecked(true);
+
         ExpandableListView mExpandableListView = (ExpandableListView) parent;
         mExpandableListView.expandGroup(groupPosition);
         return convertView;
@@ -114,7 +123,6 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
     public boolean hasStableIds() {
         return false;
     }
-
 
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {

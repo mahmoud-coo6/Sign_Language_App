@@ -6,6 +6,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColor">#000</item>
+
     </style>
 
     <style name="MyMaterialTheme" parent="MyMaterialTheme.Base">
@@ -20,4 +22,24 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+
+    <style name="BottomNavigationActive">
+        <item name="android:textColor">@android:color/holo_blue_light</item>
+        <item name="tint">@android:color/holo_blue_light</item>
+        <item name="iconTint">@android:color/holo_blue_light</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="BottomNavigationInActive">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="tint">@android:color/black</item>
+        <item name="iconTint">@android:color/black</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="Theme.AppCompat.Light.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:textColor">#000</item>
+    </style>
 </resources>

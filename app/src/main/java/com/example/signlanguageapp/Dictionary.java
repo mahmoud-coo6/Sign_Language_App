@@ -1,6 +1,5 @@
 package com.example.signlanguageapp;
 
-import android.database.Cursor;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -11,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -25,7 +25,7 @@ public class Dictionary extends Fragment {
     List<CategoryItem> dictionaryList = new ArrayList<>();
     SparseArray<Group> groups = new SparseArray<Group>();
     List<String> alphapticArray = Arrays.asList("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K",
-            "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "Del", "Space");
+            "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z");
     List<String> numberArray = Arrays.asList("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
     private View dictionaryFragment;
     private Toolbar toolbar;
@@ -47,7 +47,7 @@ public class Dictionary extends Fragment {
         search.addTextChangedListener(new TextWatcher() {
 
             public void afterTextChanged(Editable s) {
-                // you can call or do what you want with your EditText here
+
                 filter(s.toString());
             }
 
@@ -65,6 +65,7 @@ public class Dictionary extends Fragment {
     private void filter(String text) {
 
         text = text.toLowerCase();
+        Toast.makeText(getActivity(), "value: " + text, Toast.LENGTH_SHORT).show();
         Log.v("MyListAdapter", String.valueOf(groups.size()));
 
         if (text.isEmpty()) {
@@ -72,7 +73,7 @@ public class Dictionary extends Fragment {
             myadapter.notifyDataSetChanged();
         } else {
 
-            ArrayList<String> items= new ArrayList<>();
+            ArrayList<String> items = new ArrayList<>();
             for (int j = 0; j < 2; j++) {
                 Group group;
                 if (j == 0) {
@@ -80,6 +81,7 @@ public class Dictionary extends Fragment {
                     for (int i = 0; i < alphapticArray.size(); i++) {
                         if (alphapticArray.get(i).toLowerCase().contains(text.toLowerCase())) {
                             group.children.add(alphapticArray.get(i));
+                            items.add(alphapticArray.get(i));
                         }
                     }
                 } else {
@@ -87,13 +89,14 @@ public class Dictionary extends Fragment {
                     for (int i = 0; i < numberArray.size(); i++) {
                         if (numberArray.get(i).contains(text)) {
                             group.children.add(numberArray.get(i));
+                            items.add(numberArray.get(i));
                         }
                     }
                 }
 
                 groups.append(j, group);
             }
-            if (items.isEmpty()){
+            if (items.isEmpty()) {
                 createData();
             }
             myadapter.notifyDataSetChanged();

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,23 +14,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class CategrayAdapter extends RecyclerView.Adapter<CategrayAdapter.CategoryVh> {
-    //    public static final String CATEGORY_TRANSFER = "CATEGORY_TRANSFER";
-//    public static final String CATEGORY_POSITION = "CATEGORY_POSITION";
+
+
     Context context;
     List<CategoryItem> categoryList;
     private OnItemClickListener mListener;
 
-    public interface OnItemClickListener {
-        void onItemClick(int position);
+    public CategrayAdapter(Context context, List<CategoryItem> categoryList) {
+        this.context = context;
+        this.categoryList = categoryList;
     }
 
     public void setOnItemClickListener(CategrayAdapter.OnItemClickListener listener) {
         mListener = listener;
-    }
-
-    public CategrayAdapter(Context context, List<CategoryItem> categoryList) {
-        this.context = context;
-        this.categoryList = categoryList;
     }
 
     @NonNull
@@ -52,6 +47,9 @@ public class CategrayAdapter extends RecyclerView.Adapter<CategrayAdapter.Catego
         return categoryList.size();
     }
 
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
 
     class CategoryVh extends RecyclerView.ViewHolder {
         TextView category_name;
@@ -66,10 +64,8 @@ public class CategrayAdapter extends RecyclerView.Adapter<CategrayAdapter.Catego
         }
 
         public void setData(final CategoryItem category, final int position, CategoryVh holder) {
-//            VectorChildFinder vector = new VectorChildFinder(context, R.drawable.ic_links_notebook, category_image);
-//            VectorDrawableCompat.VFullPath path1 = vector.findPathByName("path1");
-//            path1.setFillColor(category.getColor());
-//            category_name.setText(category.getTitle());
+
+
             category_name.setText(categoryList.get(position).getTitle());
             category_image.setImageResource(categoryList.get(position).getImage());
 
@@ -78,15 +74,13 @@ public class CategrayAdapter extends RecyclerView.Adapter<CategrayAdapter.Catego
                 public void onClick(View v) {
 
                     if (mListener != null) {
-//                        int position = getAdapterPosition();
+
                         if (position != RecyclerView.NO_POSITION) {
                             mListener.onItemClick(position);
                         }
                     }
-//                    Intent intent = new Intent(v.getContext(), CategoryNote.class);
-//                    intent.putParcelableArrayListExtra(CATEGORY_TRANSFER, (ArrayList) categoryList);
-//                    intent.putExtra(CATEGORY_POSITION, position);
-//                    context.startActivity(intent);
+
+
                 }
             });
 
