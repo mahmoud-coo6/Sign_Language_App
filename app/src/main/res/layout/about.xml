@@ -58,4 +58,13 @@
         android:textColor="@android:color/black"
         android:textStyle="bold" />
 
+    <TextView
+        android:id="@+id/signout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sign out"
+        android:layout_gravity="end"
+        android:layout_margin="16dp"
+        android:textSize="24sp"
+        android:textStyle="bold"/>
 </androidx.appcompat.widget.LinearLayoutCompat>

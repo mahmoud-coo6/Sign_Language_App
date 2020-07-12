@@ -98,7 +98,6 @@ public class Home extends AppCompatActivity {
         } else if (color.equals("red")) {
             path1.setFillColor(Color.RED);
 
-
         }
 
     }

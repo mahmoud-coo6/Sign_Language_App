@@ -11,19 +11,27 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 public class CategrayAdapter extends RecyclerView.Adapter<CategrayAdapter.CategoryVh> {
 
 
     Context context;
-    List<CategoryItem> categoryList;
+//    List<CategoryItem> categoryList;
     private OnItemClickListener mListener;
+    List<Upload> mUploads;
 
-    public CategrayAdapter(Context context, List<CategoryItem> categoryList) {
+    public CategrayAdapter(Context context, List<Upload> uploads) {
         this.context = context;
-        this.categoryList = categoryList;
+        this.mUploads = uploads;
     }
+
+//    public CategrayAdapter(Context context, List<CategoryItem> categoryList) {
+//        this.context = context;
+//        this.categoryList = categoryList;
+//    }
 
     public void setOnItemClickListener(CategrayAdapter.OnItemClickListener listener) {
         mListener = listener;
@@ -39,12 +47,12 @@ public class CategrayAdapter extends RecyclerView.Adapter<CategrayAdapter.Catego
 
     @Override
     public void onBindViewHolder(@NonNull CategoryVh holder, int position) {
-        holder.setData(categoryList.get(position), position, holder);
+        holder.setData(mUploads.get(position), position, holder);
     }
 
     @Override
     public int getItemCount() {
-        return categoryList.size();
+        return mUploads.size();
     }
 
     public interface OnItemClickListener {
@@ -63,11 +71,13 @@ public class CategrayAdapter extends RecyclerView.Adapter<CategrayAdapter.Catego
             itemCard = itemView;
         }
 
-        public void setData(final CategoryItem category, final int position, CategoryVh holder) {
+        public void setData(final Upload category, final int position, CategoryVh holder) {
 
 
-            category_name.setText(categoryList.get(position).getTitle());
-            category_image.setImageResource(categoryList.get(position).getImage());
+            category_name.setText(mUploads.get(position).getName());
+//            category_image.setImageResource(mUploads.get(position).getImageUrl());
+            Picasso.get().load(mUploads.get(position).getImageUrl()).resize(250, 250).centerCrop().error(R.drawable.placeholder)
+                    .placeholder(R.drawable.placeholder).into(category_image);
 
             holder.itemCard.setOnClickListener(new View.OnClickListener() {
                 @Override

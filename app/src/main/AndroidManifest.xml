@@ -3,6 +3,8 @@
     package="com.example.signlanguageapp">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.RECORD_VIDEO" />
@@ -50,6 +52,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".RecognitionActivity"></activity>
+        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".SingUp"></activity>
+        <activity android:name=".AddCategory"></activity>
     </application>
 
 </manifest>

@@ -5,11 +5,14 @@ import java.util.List;
 
 public class Group {
 
-    public final List<String> children = new ArrayList<String>();
-    public String string;
+//    public final List<String> children = new ArrayList<String>();
+    public final List<Upload> children = new ArrayList<>();
+    public String imageUrl;
+    public String name;
 
-    public Group(String string) {
-        this.string = string;
+    public Group(String imageUrl, String name) {
+        this.imageUrl = imageUrl;
+        this.name= name;
     }
 
 }

@@ -235,7 +235,7 @@ public class TextFragment extends Fragment {
 
         currentPosition = position;
 
-        for (int i = 0; i <= textList.size() - 1; i++) {
+        for (int i = 0; i < textList.size() ; i++) {
             if (position != i) {
                 holder = recyclerView.findViewHolderForAdapterPosition(i).itemView.findViewById(R.id.item);
                 holder.setBackgroundTintMode(PorterDuff.Mode.ADD);

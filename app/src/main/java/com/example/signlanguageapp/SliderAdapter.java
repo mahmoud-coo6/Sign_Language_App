@@ -64,7 +64,7 @@ public class SliderAdapter extends
         viewHolder.buttonSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), Home.class);
+                Intent intent = new Intent(view.getContext(), LoginActivity.class);
                 view.getContext().startActivity(intent);
             }
         });
