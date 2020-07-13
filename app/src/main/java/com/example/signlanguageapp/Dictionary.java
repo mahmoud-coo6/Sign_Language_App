@@ -10,10 +10,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,17 +39,33 @@ public class Dictionary extends Fragment {
     private View dictionaryFragment;
     private Toolbar toolbar;
 
+    ProgressBar progressBar;
+    DatabaseReference mDatabaseRef, mDatabaseRef2;
+    List<Upload> mUploads,mUploads2;
+    ExpandableListView listView;
+    TextView textView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         dictionaryFragment = inflater.inflate(R.layout.dictionary, container, false);
 
         toolbar = dictionaryFragment.findViewById(R.id.toolbar);
+        progressBar = dictionaryFragment.findViewById(R.id.progress_circle);
+        textView = dictionaryFragment.findViewById(R.id.text);
 
+        mUploads= new ArrayList<>();
+        mUploads2= new ArrayList<>();
+        mUploads.clear();
+        mUploads2.clear();
+
+//        getList();
 //        createData();
-        ExpandableListView listView = dictionaryFragment.findViewById(R.id.dictionary_elv);
-        myadapter = new MyExpandableListAdapter(getActivity(), groups);
-        listView.setAdapter(myadapter);
+        listView = dictionaryFragment.findViewById(R.id.dictionary_elv);
+
+        getItem();
+//        myadapter = new MyExpandableListAdapter(getActivity(), groups);
+//        listView.setAdapter(myadapter);
 
 
         search = dictionaryFragment.findViewById(R.id.search_field);
@@ -48,7 +73,7 @@ public class Dictionary extends Fragment {
 
             public void afterTextChanged(Editable s) {
 
-//                filter(s.toString());
+                filter(s.toString());
             }
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -62,17 +87,165 @@ public class Dictionary extends Fragment {
         return dictionaryFragment;
     }
 
-//    private void filter(String text) {
+    public void getItem() {
+
+        mDatabaseRef= FirebaseDatabase.getInstance().getReference("uploads");
+        mDatabaseRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                mUploads.clear();
+                for (DataSnapshot postSnapShot: snapshot.getChildren()){
+                    Upload upload= postSnapShot.getValue(Upload.class);
+                    if (upload.getName()!= null && upload.getName().trim().length() != 0)
+                        mUploads.add(upload);
+                }
+                for (int i=0; i< mUploads.size(); i++) {
+                    mDatabaseRef2= FirebaseDatabase.getInstance().getReference("uploads/"+mUploads.get(i).getName());
+
+                    final int index = i;
+                    mDatabaseRef2.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            mUploads2.clear();
+                            Group group;
+
+                            for (DataSnapshot postSnapShot: snapshot.getChildren()){
+                                Upload upload= postSnapShot.getValue(Upload.class);
+                                mUploads2.add(upload);
+                            }
+                            if (mUploads2.size() > 0){
+                                group = new Group(mUploads.get(index).getImageUrl(), mUploads.get(index).getName());
+                                group.children.addAll(mUploads2);
+                                groups.append(index, group);
+                                Log.d("jjdjdfjt",mUploads2.size()+"");
+
+                                myadapter = new MyExpandableListAdapter(getActivity(), groups);
+                                listView.setAdapter(myadapter);
+                                progressBar.setVisibility(View.INVISIBLE);
+                                textView.setVisibility(View.GONE);
+                            }else{
+
+                                group = new Group(mUploads.get(index).getImageUrl(), mUploads.get(index).getName());
+//                                group.children.addAll(mUploads2);
+                                groups.append(index, group);
+                                Log.d("jjdjdfjt",mUploads2.size()+"");
+
+                                myadapter = new MyExpandableListAdapter(getActivity(), groups);
+                                listView.setAdapter(myadapter);
+//                                textView.setVisibility(View.GONE);
+                                progressBar.setVisibility(View.INVISIBLE);
+//                                textView.setVisibility(View.VISIBLE);
+//                                progressBar.setVisibility(View.INVISIBLE);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.INVISIBLE);
+                        }
+                    });
+                }
+                Log.d("ksfkjskf",mUploads.size()+"");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void getItem(final String text) {
+
+        mDatabaseRef= FirebaseDatabase.getInstance().getReference("uploads");
+        mDatabaseRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                mUploads.clear();
+                for (DataSnapshot postSnapShot: snapshot.getChildren()){
+                    Upload upload= postSnapShot.getValue(Upload.class);
+                    if (upload.getName()!= null && upload.getName().trim().length() != 0)
+                        mUploads.add(upload);
+                }
+                for (int i=0; i< mUploads.size(); i++) {
+                    mDatabaseRef2= FirebaseDatabase.getInstance().getReference("uploads/"+mUploads.get(i).getName());
+
+                    final int index = i;
+                    mDatabaseRef2.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            mUploads2.clear();
+                            Group group;
+
+                            for (DataSnapshot postSnapShot: snapshot.getChildren()){
+                                Upload upload= postSnapShot.getValue(Upload.class);
+                                if (upload.getName()!= null && upload.getName().contains(text))
+                                mUploads2.add(upload);
+                            }
+                            if (mUploads2.size() > 0){
+                                group = new Group(mUploads.get(index).getImageUrl(), mUploads.get(index).getName());
+                                group.children.addAll(mUploads2);
+                                groups.append(index, group);
+                                Log.d("jjdjdfjt",mUploads2.size()+"");
+
+                                myadapter = new MyExpandableListAdapter(getActivity(), groups);
+                                listView.setAdapter(myadapter);
+//                                textView.setVisibility(View.GONE);
+                                progressBar.setVisibility(View.INVISIBLE);
+                            }else{
+//                                group = new Group(mUploads.get(index).getImageUrl(), mUploads.get(index).getName());
+////                                group.children.addAll(mUploads2);
+//                                groups.append(index, group);
+//                                Log.d("jjdjdfjt",mUploads2.size()+"");
 //
-//        text = text.toLowerCase();
-//        Toast.makeText(getActivity(), "value: " + text, Toast.LENGTH_SHORT).show();
-//        Log.v("MyListAdapter", String.valueOf(groups.size()));
-//
-//        if (text.isEmpty()) {
-//            createData();
+//                                myadapter = new MyExpandableListAdapter(getActivity(), groups);
+
+//                                textView.setVisibility(View.VISIBLE);
+//                                listView.setVisibility(View.GONE);
+//                                progressBar.setVisibility(View.INVISIBLE);
+
+                                group = new Group(mUploads.get(index).getImageUrl(), mUploads.get(index).getName());
+//                                group.children.addAll(mUploads2);
+                                groups.append(index, group);
+                                Log.d("jjdjdfjt",mUploads2.size()+"");
+
+                                myadapter = new MyExpandableListAdapter(getActivity(), groups);
+                                listView.setAdapter(myadapter);
+//                                textView.setVisibility(View.GONE);
+                                progressBar.setVisibility(View.INVISIBLE);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.INVISIBLE);
+                        }
+                    });
+                }
+                Log.d("ksfkjskf",mUploads.size()+"");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void filter(String text) {
+
+        text = text.toLowerCase();
+        Toast.makeText(getActivity(), "value: " + text, Toast.LENGTH_SHORT).show();
+        Log.v("MyListAdapter", String.valueOf(groups.size()));
+
+        if (text.isEmpty()) {
+            getItem();
 //            myadapter.notifyDataSetChanged();
-//        } else {
-//
+        } else {
+
+            getItem(text);
 //            ArrayList<String> items = new ArrayList<>();
 //            for (int j = 0; j < 2; j++) {
 //                Group group;
@@ -100,9 +273,9 @@ public class Dictionary extends Fragment {
 //                createData();
 //            }
 //            myadapter.notifyDataSetChanged();
-//
-//        }
-//    }
+
+        }
+    }
 //
 //    public void createData() {
 //        for (int j = 0; j < 2; j++) {

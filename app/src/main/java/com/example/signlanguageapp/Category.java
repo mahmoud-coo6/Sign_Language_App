@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -49,6 +50,7 @@ public class Category extends Fragment {
     DatabaseReference mDatabaseRef;
     List<Upload> mUploads;
     ProgressBar mProgressCircle;
+    TextView textView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,6 +58,7 @@ public class Category extends Fragment {
         categoryFragment = inflater.inflate(R.layout.category, container, false);
         toolbar = categoryFragment.findViewById(R.id.toolbar);
         fab = categoryFragment.findViewById(R.id.fab);
+        textView = categoryFragment.findViewById(R.id.text);
 
         mProgressCircle= categoryFragment.findViewById(R.id.progress_circle);
 
@@ -69,29 +72,31 @@ public class Category extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
 
 
-        mDatabaseRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                mUploads.clear();
-                for (DataSnapshot postSnapShot: snapshot.getChildren()){
-                    Upload upload= postSnapShot.getValue(Upload.class);
-                    if (upload.getName()!= null && upload.getName().trim().length() != 0)
-                    mUploads.add(upload);
-                }
-                Log.d("ksfkjskf",mUploads.size()+"");
-                categrayAdapter= new CategrayAdapter(getActivity(), mUploads);
-                categrayAdapter.setOnItemClickListener(listener);
-                recyclerView.setAdapter(categrayAdapter);
-                mProgressCircle.setVisibility(View.INVISIBLE);
-                categrayAdapter.notifyDataSetChanged();
-            }
+//        mDatabaseRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                mUploads.clear();
+//                for (DataSnapshot postSnapShot: snapshot.getChildren()){
+//                    Upload upload= postSnapShot.getValue(Upload.class);
+//                    if (upload.getName()!= null && upload.getName().trim().length() != 0)
+//                    mUploads.add(upload);
+//                }
+//                Log.d("ksfkjskf",mUploads.size()+"");
+//                categrayAdapter= new CategrayAdapter(getActivity(), mUploads);
+//                categrayAdapter.setOnItemClickListener(listener);
+//                recyclerView.setAdapter(categrayAdapter);
+//                mProgressCircle.setVisibility(View.INVISIBLE);
+//                categrayAdapter.notifyDataSetChanged();
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+//                mProgressCircle.setVisibility(View.INVISIBLE);
+//            }
+//        });
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                mProgressCircle.setVisibility(View.INVISIBLE);
-            }
-        });
+        getData();
 
         listener = new CategrayAdapter.OnItemClickListener() {
             @Override
@@ -150,7 +155,7 @@ public class Category extends Fragment {
 
             public void afterTextChanged(Editable s) {
 
-//                filter(s.toString());
+                filter(s.toString());
             }
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -160,7 +165,6 @@ public class Category extends Fragment {
 
             }
         });
-
 
         return categoryFragment;
     }
@@ -174,18 +178,100 @@ public class Category extends Fragment {
         return matcher.matches();
     }
 
-//    private void filter(String text) {
+    private void getData() {
+//        mDatabaseRef= FirebaseDatabase.getInstance().getReference("uploads");
+
+        mDatabaseRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                mUploads.clear();
+                for (DataSnapshot postSnapShot: snapshot.getChildren()){
+                    Upload upload= postSnapShot.getValue(Upload.class);
+                    if (upload.getName()!= null && upload.getName().trim().length() != 0)
+                        mUploads.add(upload);
+                }
+                Log.d("ksfkjskf",mUploads.size()+"");
+                if (mUploads.size()> 0) {
+                    categrayAdapter = new CategrayAdapter(getActivity(), mUploads);
+                    categrayAdapter.setOnItemClickListener(listener);
+                    recyclerView.setAdapter(categrayAdapter);
+                    textView.setVisibility(View.GONE);
+                    mProgressCircle.setVisibility(View.INVISIBLE);
+                    categrayAdapter.notifyDataSetChanged();
+                }else {
+                    textView.setVisibility(View.VISIBLE);
+                    mProgressCircle.setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+//                textView.setVisibility(View.VISIBLE);
+                mProgressCircle.setVisibility(View.INVISIBLE);
+            }
+        });
+
+
+    }
+
+    private void getData(final String text) {
+//        mDatabaseRef= FirebaseDatabase.getInstance().getReference("uploads");
+//        mUploads= new ArrayList<>();
+//        mUploads.clear();
+//        mDatabaseRef= FirebaseDatabase.getInstance().getReference("uploads");
 //
-//        text = text.toLowerCase();
-//        boolean found0 = false, found1 = false;
-//
-//
-//        if (text.isEmpty()) {
-//            createData();
-//
-//        } else {
-//
-//
+//        int columns = 2;
+//        recyclerView = categoryFragment.findViewById(R.id.category_rv);
+//        LinearLayoutManager layoutManager = new GridLayoutManager(getActivity(), columns);
+//        recyclerView.setLayoutManager(layoutManager);
+
+        mDatabaseRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                mUploads.clear();
+                for (DataSnapshot postSnapShot: snapshot.getChildren()){
+                    Upload upload= postSnapShot.getValue(Upload.class);
+//                    if (upload != null && upload.getName().contains(text))
+                        if (upload.getName()!= null && upload.getName().contains(text))
+                            mUploads.add(upload);
+                }
+                Log.d("ksfkjskf",mUploads.size()+"");
+                if (mUploads.size()> 0) {
+                    categrayAdapter = new CategrayAdapter(getActivity(), mUploads);
+                    categrayAdapter.setOnItemClickListener(listener);
+                    recyclerView.setAdapter(categrayAdapter);
+                    categrayAdapter.notifyDataSetChanged();
+                    textView.setVisibility(View.GONE);
+                    mProgressCircle.setVisibility(View.INVISIBLE);
+                }else {
+                    textView.setText("there is no category found ");
+                    textView.setVisibility(View.VISIBLE);
+                    mProgressCircle.setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                mProgressCircle.setVisibility(View.INVISIBLE);
+            }
+        });
+
+
+    }
+    private void filter(String text) {
+
+        text = text.toLowerCase();
+        boolean found0 = false, found1 = false;
+
+
+        if (text.isEmpty()) {
+            getData();
+
+        } else {
+            getData(text);
+
 //            if ("Alphaptic".toLowerCase().contains(text.toLowerCase())) {
 //                found0 = true;
 //
@@ -205,14 +291,12 @@ public class Category extends Fragment {
 //                createData();
 //
 //            }
-//
-//
-//        }
-//
-//
+
+        }
+
 //        categrayAdapter.notifyDataSetChanged();
-//
-//    }
+
+    }
 
 //    public void createData() {
 //        recyclerView = categoryFragment.findViewById(R.id.category_rv);

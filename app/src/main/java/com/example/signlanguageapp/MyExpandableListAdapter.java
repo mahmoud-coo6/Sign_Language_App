@@ -58,7 +58,7 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
         imageView = convertView.findViewById(R.id.image);
         text.setText(children.getName());
 //        image = "https://res.cloudinary.com/dwpo5xilm/image/upload/v1582724492/sick-fits/" + children + ".png";
-        Picasso.get().load(children.getImageUrl()).error(R.drawable.placeholder)
+        Picasso.get().load(children.getImageUrl()).resize(150, 150).centerCrop().error(R.drawable.placeholder)
                 .placeholder(R.drawable.placeholder).into(imageView);
 
         convertView.setOnClickListener(new View.OnClickListener() {

@@ -90,56 +90,8 @@ public class CategoryList extends Fragment {
             Log.d("postitiondfddff: "+type,"name: "+name);
             mDatabaseRef= FirebaseDatabase.getInstance().getReference("uploads/"+name);
 
-            mDatabaseRef.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    mUploads.clear();
-                    Group group;
+            getData();
 
-//                    for (int i = 0; i < numberArray.size(); i++) {
-//                        group.children.add(numberArray.get(i));
-//                    }
-//                }
-//        groups.append(0, group);
-
-                    for (DataSnapshot postSnapShot: snapshot.getChildren()){
-                        Upload upload= postSnapShot.getValue(Upload.class);
-                        mUploads.add(upload);
-
-                    }
-
-                    if (mUploads.size() > 0){
-//                        Log.d("posksksksfskfsd: "+type,"size: "+ mUploads.size());
-                        group = new Group(image, name);
-
-                        group.children.addAll(mUploads);
-
-                        groups.append(0, group);
-                        Log.d("jjdjdfjt",mUploads.size()+"");
-
-                        adapter = new MyExpandableListAdapter(getActivity(), groups);
-                        listView.setAdapter(adapter);
-//                    recyclerView.setAdapter(categrayAdapter);
-//                        listView.notify();
-                        progressBar.setVisibility(View.INVISIBLE);
-                    }else{
-                        textView.setVisibility(View.VISIBLE);
-                        progressBar.setVisibility(View.INVISIBLE);
-
-                    }
-
-//                    categrayAdapter= new CategrayAdapter(getActivity(), mUploads);
-//                    categrayAdapter.setOnItemClickListener(listener);
-
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                    progressBar.setVisibility(View.INVISIBLE);
-                }
-            });
         }
 
 
@@ -182,7 +134,7 @@ public class CategoryList extends Fragment {
 
             public void afterTextChanged(Editable s) {
 
-//                filter(s.toString());
+                filter(s.toString());
             }
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -205,17 +157,208 @@ public class CategoryList extends Fragment {
     }
 
 
+    private void getData() {
+//        mDatabaseRef= FirebaseDatabase.getInstance().getReference("uploads");
+//        mDatabaseRef= FirebaseDatabase.getInstance().getReference("uploads/"+name);
 
-//    private void filter(String text) {
+        mDatabaseRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                mUploads.clear();
+                Group group;
+
+//                    for (int i = 0; i < numberArray.size(); i++) {
+//                        group.children.add(numberArray.get(i));
+//                    }
+//                }
+//        groups.append(0, group);
+
+                for (DataSnapshot postSnapShot: snapshot.getChildren()){
+                    Upload upload= postSnapShot.getValue(Upload.class);
+                    mUploads.add(upload);
+
+                }
+
+                if (mUploads.size() > 0){
+//                        Log.d("posksksksfskfsd: "+type,"size: "+ mUploads.size());
+                    group = new Group(image, name);
+
+                    group.children.addAll(mUploads);
+
+                    groups.append(0, group);
+                    Log.d("jjdjdfjt",mUploads.size()+"");
+
+                    adapter = new MyExpandableListAdapter(getActivity(), groups);
+                    listView.setAdapter(adapter);
+//                    recyclerView.setAdapter(categrayAdapter);
+//                        listView.notify();
+                    textView.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.INVISIBLE);
+                }else{
+
+                    group = new Group(image, name);
+
+//                    group.children.addAll(mUploads);
+
+                    groups.append(0, group);
+                    Log.d("jfgjfgjf",mUploads.size()+"");
+
+                    adapter = new MyExpandableListAdapter(getActivity(), groups);
+                    listView.setAdapter(adapter);
+                    progressBar.setVisibility(View.INVISIBLE);
+
+                }
+
+//                    categrayAdapter= new CategrayAdapter(getActivity(), mUploads);
+//                    categrayAdapter.setOnItemClickListener(listener);
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.INVISIBLE);
+            }
+        });
+
+    }
+
+    private void getData(final String text) {
+//        mDatabaseRef= FirebaseDatabase.getInstance().getReference("uploads");
+//        mUploads= new ArrayList<>();
+//        mUploads.clear();
+//        mDatabaseRef= FirebaseDatabase.getInstance().getReference("uploads");
 //
-//        text = text.toLowerCase();
-//        Log.v("MyListAdapter", String.valueOf(groups.size()));
+//        int columns = 2;
+//        recyclerView = categoryFragment.findViewById(R.id.category_rv);
+//        LinearLayoutManager layoutManager = new GridLayoutManager(getActivity(), columns);
+//        recyclerView.setLayoutManager(layoutManager);
+
+//        mDatabaseRef= FirebaseDatabase.getInstance().getReference("uploads/"+name);
+
+        mDatabaseRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                mUploads.clear();
+                Group group;
+
+//                    for (int i = 0; i < numberArray.size(); i++) {
+//                        group.children.add(numberArray.get(i));
+//                    }
+//                }
+//        groups.append(0, group);
+
+                for (DataSnapshot postSnapShot: snapshot.getChildren()){
+                    Upload upload= postSnapShot.getValue(Upload.class);
+                    if (upload.getName()!= null && upload.getName().contains(text)) {
+                        mUploads.add(upload);
+//                        Log.d("magjsgjsdgjd: "+upload.getName(),"image: "+upload.getImageUrl());
+
+                    }
+                }
+
+
+
+                if (mUploads.size() > 0){
+//                        Log.d("posksksksfskfsd: "+type,"size: "+ mUploads.size());
+//                    mUploads.clear();
+                    group = new Group(image, name);
 //
-//        if (text.isEmpty()) {
+                    group.children.addAll(mUploads);
+
+                    groups.append(0, group);
+                    Log.d("sdgsdgsdg",mUploads.size()+"");
+
+                    adapter = new MyExpandableListAdapter(getActivity(), groups);
+                    listView.setAdapter(adapter);
+//                    recyclerView.setAdapter(categrayAdapter);
+//                        listView.notify();
+                    textView.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.INVISIBLE);
+//                    recyclerView.setAdapter(categrayAdapter);
+//                        listView.notify();
+//                    progressBar.setVisibility(View.INVISIBLE);
+//                    textView.setVisibility(View.VISIBLE);
+//                    progressBar.setVisibility(View.INVISIBLE);
+
+                }else{
+//                    textView.setVisibility(View.VISIBLE);
+
+//                    mUploads.clear();
+//                    listView.removeAllViews();
+
+                    group = new Group(image, name);
+
+//                    group.children.addAll(mUploads);
+
+                    groups.append(0, group);
+                    Log.d("jfgjfgjf",mUploads.size()+"");
+
+                    adapter = new MyExpandableListAdapter(getActivity(), groups);
+                    listView.setAdapter(adapter);
+                    progressBar.setVisibility(View.INVISIBLE);
+                }
+
+//                    categrayAdapter= new CategrayAdapter(getActivity(), mUploads);
+//                    categrayAdapter.setOnItemClickListener(listener);
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.INVISIBLE);
+            }
+        });
+
+
+
+//
+//
+//
+//        mDatabaseRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                mUploads.clear();
+//                for (DataSnapshot postSnapShot: snapshot.getChildren()){
+//                    Upload upload= postSnapShot.getValue(Upload.class);
+////                    if (upload != null && upload.getName().contains(text))
+//                    if (upload.getName()!= null && upload.getName().contains(text))
+//                        mUploads.add(upload);
+//                }
+//                Log.d("ksfkjskf",mUploads.size()+"");
+//                adapter= new MyExpandableListAdapter(getActivity(), mUploads);
+//                categrayAdapter.setOnItemClickListener(listener);
+//                recyclerView.setAdapter(categrayAdapter);
+//                mProgressCircle.setVisibility(View.INVISIBLE);
+//                categrayAdapter.notifyDataSetChanged();
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+//                mProgressCircle.setVisibility(View.INVISIBLE);
+//            }
+//        });
+
+
+    }
+
+
+    private void filter(String text) {
+
+        text = text.toLowerCase();
+        Log.v("MyListAdapter", String.valueOf(groups.size()));
+
+        if (text.isEmpty()) {
 //            createData();
 //            adapter.notifyDataSetChanged();
-//        } else {
-//
+
+            getData();
+        } else {
+            getData(text);
 //            ArrayList<String> items = new ArrayList<>();
 //            Group group;
 //            if (type == 0) {
@@ -243,10 +386,11 @@ public class CategoryList extends Fragment {
 //                groups.append(0, group);
 //            }
 //            adapter.notifyDataSetChanged();
-//
-//        }
-//    }
-//
+
+
+        }
+    }
+
 //
 //    public void createData() {
 //        Group group;
