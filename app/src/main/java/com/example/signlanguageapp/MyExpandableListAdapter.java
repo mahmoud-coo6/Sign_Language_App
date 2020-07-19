@@ -46,7 +46,7 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
-//        final String children = (String) getChild(groupPosition, childPosition);
+
         final Upload children = (Upload) getChild(groupPosition, childPosition);
         TextView text = null;
         ImageView imageView = null;
@@ -57,7 +57,7 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
         text = convertView.findViewById(R.id.textView1);
         imageView = convertView.findViewById(R.id.image);
         text.setText(children.getName());
-//        image = "https://res.cloudinary.com/dwpo5xilm/image/upload/v1582724492/sick-fits/" + children + ".png";
+
         Picasso.get().load(children.getImageUrl()).resize(150, 150).centerCrop().error(R.drawable.placeholder)
                 .placeholder(R.drawable.placeholder).into(imageView);
 
@@ -66,7 +66,8 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
 
-                bundle.putString("result", children.getName());
+                bundle.putString("result", children.getImageUrl());
+                bundle.putString("name", children.getName());
                 SearchResult searchResult = new SearchResult();
                 searchResult.setArguments(bundle);
                 FragmentTransaction transaction = ((FragmentActivity) v.getContext()).getSupportFragmentManager().beginTransaction();
@@ -74,6 +75,7 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
 
                 transaction.replace(R.id.frame_container, searchResult);
                 transaction.setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+//                transaction.addToBackStack(null);
                 transaction.commit();
             }
         });

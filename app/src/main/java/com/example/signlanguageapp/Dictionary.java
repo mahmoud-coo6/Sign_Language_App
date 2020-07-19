@@ -36,14 +36,13 @@ public class Dictionary extends Fragment {
     List<String> alphapticArray = Arrays.asList("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K",
             "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z");
     List<String> numberArray = Arrays.asList("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
-    private View dictionaryFragment;
-    private Toolbar toolbar;
-
     ProgressBar progressBar;
     DatabaseReference mDatabaseRef, mDatabaseRef2;
-    List<Upload> mUploads,mUploads2;
+    List<Upload> mUploads, mUploads2;
     ExpandableListView listView;
     TextView textView;
+    private View dictionaryFragment;
+    private Toolbar toolbar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,18 +53,15 @@ public class Dictionary extends Fragment {
         progressBar = dictionaryFragment.findViewById(R.id.progress_circle);
         textView = dictionaryFragment.findViewById(R.id.text);
 
-        mUploads= new ArrayList<>();
-        mUploads2= new ArrayList<>();
+        mUploads = new ArrayList<>();
+        mUploads2 = new ArrayList<>();
         mUploads.clear();
         mUploads2.clear();
 
-//        getList();
-//        createData();
+
         listView = dictionaryFragment.findViewById(R.id.dictionary_elv);
 
         getItem();
-//        myadapter = new MyExpandableListAdapter(getActivity(), groups);
-//        listView.setAdapter(myadapter);
 
 
         search = dictionaryFragment.findViewById(R.id.search_field);
@@ -89,18 +85,18 @@ public class Dictionary extends Fragment {
 
     public void getItem() {
 
-        mDatabaseRef= FirebaseDatabase.getInstance().getReference("uploads");
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploads");
         mDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 mUploads.clear();
-                for (DataSnapshot postSnapShot: snapshot.getChildren()){
-                    Upload upload= postSnapShot.getValue(Upload.class);
-                    if (upload.getName()!= null && upload.getName().trim().length() != 0)
+                for (DataSnapshot postSnapShot : snapshot.getChildren()) {
+                    Upload upload = postSnapShot.getValue(Upload.class);
+                    if (upload.getName() != null && upload.getName().trim().length() != 0)
                         mUploads.add(upload);
                 }
-                for (int i=0; i< mUploads.size(); i++) {
-                    mDatabaseRef2= FirebaseDatabase.getInstance().getReference("uploads/"+mUploads.get(i).getName());
+                for (int i = 0; i < mUploads.size(); i++) {
+                    mDatabaseRef2 = FirebaseDatabase.getInstance().getReference("uploads/" + mUploads.get(i).getName());
 
                     final int index = i;
                     mDatabaseRef2.addValueEventListener(new ValueEventListener() {
@@ -109,33 +105,33 @@ public class Dictionary extends Fragment {
                             mUploads2.clear();
                             Group group;
 
-                            for (DataSnapshot postSnapShot: snapshot.getChildren()){
-                                Upload upload= postSnapShot.getValue(Upload.class);
+                            for (DataSnapshot postSnapShot : snapshot.getChildren()) {
+                                Upload upload = postSnapShot.getValue(Upload.class);
                                 mUploads2.add(upload);
                             }
-                            if (mUploads2.size() > 0){
+                            if (mUploads2.size() > 0) {
                                 group = new Group(mUploads.get(index).getImageUrl(), mUploads.get(index).getName());
                                 group.children.addAll(mUploads2);
                                 groups.append(index, group);
-                                Log.d("jjdjdfjt",mUploads2.size()+"");
+                                Log.d("jjdjdfjt", mUploads2.size() + "");
 
                                 myadapter = new MyExpandableListAdapter(getActivity(), groups);
                                 listView.setAdapter(myadapter);
                                 progressBar.setVisibility(View.INVISIBLE);
                                 textView.setVisibility(View.GONE);
-                            }else{
+                            } else {
 
                                 group = new Group(mUploads.get(index).getImageUrl(), mUploads.get(index).getName());
-//                                group.children.addAll(mUploads2);
+
                                 groups.append(index, group);
-                                Log.d("jjdjdfjt",mUploads2.size()+"");
+                                Log.d("jjdjdfjt", mUploads2.size() + "");
 
                                 myadapter = new MyExpandableListAdapter(getActivity(), groups);
                                 listView.setAdapter(myadapter);
-//                                textView.setVisibility(View.GONE);
+
                                 progressBar.setVisibility(View.INVISIBLE);
-//                                textView.setVisibility(View.VISIBLE);
-//                                progressBar.setVisibility(View.INVISIBLE);
+
+
                             }
                         }
 
@@ -146,7 +142,7 @@ public class Dictionary extends Fragment {
                         }
                     });
                 }
-                Log.d("ksfkjskf",mUploads.size()+"");
+                Log.d("ksfkjskf", mUploads.size() + "");
             }
 
             @Override
@@ -158,18 +154,18 @@ public class Dictionary extends Fragment {
 
     public void getItem(final String text) {
 
-        mDatabaseRef= FirebaseDatabase.getInstance().getReference("uploads");
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploads");
         mDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 mUploads.clear();
-                for (DataSnapshot postSnapShot: snapshot.getChildren()){
-                    Upload upload= postSnapShot.getValue(Upload.class);
-                    if (upload.getName()!= null && upload.getName().trim().length() != 0)
+                for (DataSnapshot postSnapShot : snapshot.getChildren()) {
+                    Upload upload = postSnapShot.getValue(Upload.class);
+                    if (upload.getName() != null && upload.getName().trim().length() != 0)
                         mUploads.add(upload);
                 }
-                for (int i=0; i< mUploads.size(); i++) {
-                    mDatabaseRef2= FirebaseDatabase.getInstance().getReference("uploads/"+mUploads.get(i).getName());
+                for (int i = 0; i < mUploads.size(); i++) {
+                    mDatabaseRef2 = FirebaseDatabase.getInstance().getReference("uploads/" + mUploads.get(i).getName());
 
                     final int index = i;
                     mDatabaseRef2.addValueEventListener(new ValueEventListener() {
@@ -178,41 +174,32 @@ public class Dictionary extends Fragment {
                             mUploads2.clear();
                             Group group;
 
-                            for (DataSnapshot postSnapShot: snapshot.getChildren()){
-                                Upload upload= postSnapShot.getValue(Upload.class);
-                                if (upload.getName()!= null && upload.getName().contains(text))
-                                mUploads2.add(upload);
+                            for (DataSnapshot postSnapShot : snapshot.getChildren()) {
+                                Upload upload = postSnapShot.getValue(Upload.class);
+                                if (upload.getName() != null && upload.getName().contains(text))
+                                    mUploads2.add(upload);
                             }
-                            if (mUploads2.size() > 0){
+                            if (mUploads2.size() > 0) {
                                 group = new Group(mUploads.get(index).getImageUrl(), mUploads.get(index).getName());
                                 group.children.addAll(mUploads2);
                                 groups.append(index, group);
-                                Log.d("jjdjdfjt",mUploads2.size()+"");
+                                Log.d("jjdjdfjt", mUploads2.size() + "");
 
                                 myadapter = new MyExpandableListAdapter(getActivity(), groups);
                                 listView.setAdapter(myadapter);
-//                                textView.setVisibility(View.GONE);
-                                progressBar.setVisibility(View.INVISIBLE);
-                            }else{
-//                                group = new Group(mUploads.get(index).getImageUrl(), mUploads.get(index).getName());
-////                                group.children.addAll(mUploads2);
-//                                groups.append(index, group);
-//                                Log.d("jjdjdfjt",mUploads2.size()+"");
-//
-//                                myadapter = new MyExpandableListAdapter(getActivity(), groups);
 
-//                                textView.setVisibility(View.VISIBLE);
-//                                listView.setVisibility(View.GONE);
-//                                progressBar.setVisibility(View.INVISIBLE);
+                                progressBar.setVisibility(View.INVISIBLE);
+                            } else {
+
 
                                 group = new Group(mUploads.get(index).getImageUrl(), mUploads.get(index).getName());
-//                                group.children.addAll(mUploads2);
+
                                 groups.append(index, group);
-                                Log.d("jjdjdfjt",mUploads2.size()+"");
+                                Log.d("jjdjdfjt", mUploads2.size() + "");
 
                                 myadapter = new MyExpandableListAdapter(getActivity(), groups);
                                 listView.setAdapter(myadapter);
-//                                textView.setVisibility(View.GONE);
+
                                 progressBar.setVisibility(View.INVISIBLE);
                             }
                         }
@@ -224,7 +211,7 @@ public class Dictionary extends Fragment {
                         }
                     });
                 }
-                Log.d("ksfkjskf",mUploads.size()+"");
+                Log.d("ksfkjskf", mUploads.size() + "");
             }
 
             @Override
@@ -242,58 +229,14 @@ public class Dictionary extends Fragment {
 
         if (text.isEmpty()) {
             getItem();
-//            myadapter.notifyDataSetChanged();
+
         } else {
 
             getItem(text);
-//            ArrayList<String> items = new ArrayList<>();
-//            for (int j = 0; j < 2; j++) {
-//                Group group;
-//                if (j == 0) {
-//                    group = new Group("Alphaptic ");
-//                    for (int i = 0; i < alphapticArray.size(); i++) {
-//                        if (alphapticArray.get(i).toLowerCase().contains(text.toLowerCase())) {
-//                            group.children.add(alphapticArray.get(i));
-//                            items.add(alphapticArray.get(i));
-//                        }
-//                    }
-//                } else {
-//                    group = new Group("Number ");
-//                    for (int i = 0; i < numberArray.size(); i++) {
-//                        if (numberArray.get(i).contains(text)) {
-//                            group.children.add(numberArray.get(i));
-//                            items.add(numberArray.get(i));
-//                        }
-//                    }
-//                }
-//
-//                groups.append(j, group);
-//            }
-//            if (items.isEmpty()) {
-//                createData();
-//            }
-//            myadapter.notifyDataSetChanged();
+
 
         }
     }
-//
-//    public void createData() {
-//        for (int j = 0; j < 2; j++) {
-//            Group group;
-//            if (j == 0) {
-//                group = new Group("Alphaptic ");
-//                for (int i = 0; i < alphapticArray.size(); i++) {
-//                    group.children.add(alphapticArray.get(i));
-//                }
-//            } else {
-//                group = new Group("Number ");
-//                for (int i = 0; i < numberArray.size(); i++) {
-//                    group.children.add(numberArray.get(i));
-//                }
-//            }
-//
-//            groups.append(j, group);
-//        }
-//    }
+
 
 }

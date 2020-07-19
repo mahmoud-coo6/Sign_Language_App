@@ -19,19 +19,14 @@ public class CategrayAdapter extends RecyclerView.Adapter<CategrayAdapter.Catego
 
 
     Context context;
-//    List<CategoryItem> categoryList;
-    private OnItemClickListener mListener;
     List<Upload> mUploads;
+    private OnItemClickListener mListener;
 
     public CategrayAdapter(Context context, List<Upload> uploads) {
         this.context = context;
         this.mUploads = uploads;
     }
 
-//    public CategrayAdapter(Context context, List<CategoryItem> categoryList) {
-//        this.context = context;
-//        this.categoryList = categoryList;
-//    }
 
     public void setOnItemClickListener(CategrayAdapter.OnItemClickListener listener) {
         mListener = listener;
@@ -75,7 +70,7 @@ public class CategrayAdapter extends RecyclerView.Adapter<CategrayAdapter.Catego
 
 
             category_name.setText(mUploads.get(position).getName());
-//            category_image.setImageResource(mUploads.get(position).getImageUrl());
+
             Picasso.get().load(mUploads.get(position).getImageUrl()).resize(250, 250).centerCrop().error(R.drawable.placeholder)
                     .placeholder(R.drawable.placeholder).into(category_image);
 

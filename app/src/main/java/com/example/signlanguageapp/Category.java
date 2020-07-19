@@ -38,19 +38,26 @@ public class Category extends Fragment {
 
     CategrayAdapter categrayAdapter;
     EditText search;
-//    List<CategoryItem> categoryList = new ArrayList<>();
+
     RecyclerView recyclerView;
-//    ArrayList<String> content = new ArrayList<>();
+
     CategrayAdapter.OnItemClickListener listener;
-    private View categoryFragment;
-    private Toolbar toolbar;
     FloatingActionButton fab;
     FirebaseUser currentUser;
-
     DatabaseReference mDatabaseRef;
     List<Upload> mUploads;
     ProgressBar mProgressCircle;
     TextView textView;
+    private View categoryFragment;
+    private Toolbar toolbar;
+
+    public static boolean isAdmin(String emailAddress) {
+        String expression = "^[\\w.+\\-]+@admin\\.com$";
+        CharSequence inputStr = emailAddress;
+        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(inputStr);
+        return matcher.matches();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,41 +67,17 @@ public class Category extends Fragment {
         fab = categoryFragment.findViewById(R.id.fab);
         textView = categoryFragment.findViewById(R.id.text);
 
-        mProgressCircle= categoryFragment.findViewById(R.id.progress_circle);
+        mProgressCircle = categoryFragment.findViewById(R.id.progress_circle);
 
-        mUploads= new ArrayList<>();
+        mUploads = new ArrayList<>();
         mUploads.clear();
-        mDatabaseRef= FirebaseDatabase.getInstance().getReference("uploads");
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploads");
 
         int columns = 2;
         recyclerView = categoryFragment.findViewById(R.id.category_rv);
         LinearLayoutManager layoutManager = new GridLayoutManager(getActivity(), columns);
         recyclerView.setLayoutManager(layoutManager);
 
-
-//        mDatabaseRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                mUploads.clear();
-//                for (DataSnapshot postSnapShot: snapshot.getChildren()){
-//                    Upload upload= postSnapShot.getValue(Upload.class);
-//                    if (upload.getName()!= null && upload.getName().trim().length() != 0)
-//                    mUploads.add(upload);
-//                }
-//                Log.d("ksfkjskf",mUploads.size()+"");
-//                categrayAdapter= new CategrayAdapter(getActivity(), mUploads);
-//                categrayAdapter.setOnItemClickListener(listener);
-//                recyclerView.setAdapter(categrayAdapter);
-//                mProgressCircle.setVisibility(View.INVISIBLE);
-//                categrayAdapter.notifyDataSetChanged();
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
-//                mProgressCircle.setVisibility(View.INVISIBLE);
-//            }
-//        });
 
         getData();
 
@@ -112,6 +95,7 @@ public class Category extends Fragment {
                 bundle.putString("image", mUploads.get(position).getImageUrl());
                 fragment.setArguments(bundle);
                 transaction.replace(R.id.frame_container, fragment);
+                transaction.addToBackStack(null);
                 transaction.setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
 
                 transaction.commit();
@@ -123,10 +107,9 @@ public class Category extends Fragment {
         if (currentUser != null && isAdmin(currentUser.getEmail())) {
 
             fab.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             fab.setVisibility(View.GONE);
         }
-
 
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -139,17 +122,7 @@ public class Category extends Fragment {
             }
         });
 
-//        int columns = 2;
-//        recyclerView = categoryFragment.findViewById(R.id.category_rv);
-//        LinearLayoutManager layoutManager = new GridLayoutManager(getActivity(), columns);
-//        recyclerView.setLayoutManager(layoutManager);
-//        content.add("Alphaptic");
-//        content.add("Number");
-//        categoryList.add(new CategoryItem("Alphaptic", R.drawable.ic_alphabet));
-//        categoryList.add(new CategoryItem("Number", R.drawable.ic_number));
-//        categrayAdapter = new CategrayAdapter(getActivity(), categoryList);
-//        categrayAdapter.setOnItemClickListener(listener);
-//        recyclerView.setAdapter(categrayAdapter);
+
         search = categoryFragment.findViewById(R.id.search_field);
         search.addTextChangedListener(new TextWatcher() {
 
@@ -169,36 +142,27 @@ public class Category extends Fragment {
         return categoryFragment;
     }
 
-
-    public static boolean isAdmin(String emailAddress) {
-        String expression = "^[\\w.+\\-]+@admin\\.com$";
-        CharSequence inputStr = emailAddress;
-        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
-        Matcher matcher = pattern.matcher(inputStr);
-        return matcher.matches();
-    }
-
     private void getData() {
-//        mDatabaseRef= FirebaseDatabase.getInstance().getReference("uploads");
+
 
         mDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 mUploads.clear();
-                for (DataSnapshot postSnapShot: snapshot.getChildren()){
-                    Upload upload= postSnapShot.getValue(Upload.class);
-                    if (upload.getName()!= null && upload.getName().trim().length() != 0)
+                for (DataSnapshot postSnapShot : snapshot.getChildren()) {
+                    Upload upload = postSnapShot.getValue(Upload.class);
+                    if (upload.getName() != null && upload.getName().trim().length() != 0)
                         mUploads.add(upload);
                 }
-                Log.d("ksfkjskf",mUploads.size()+"");
-                if (mUploads.size()> 0) {
+                Log.d("ksfkjskf", mUploads.size() + "");
+                if (mUploads.size() > 0) {
                     categrayAdapter = new CategrayAdapter(getActivity(), mUploads);
                     categrayAdapter.setOnItemClickListener(listener);
                     recyclerView.setAdapter(categrayAdapter);
                     textView.setVisibility(View.GONE);
                     mProgressCircle.setVisibility(View.INVISIBLE);
                     categrayAdapter.notifyDataSetChanged();
-                }else {
+                } else {
                     textView.setVisibility(View.VISIBLE);
                     mProgressCircle.setVisibility(View.INVISIBLE);
                 }
@@ -207,7 +171,7 @@ public class Category extends Fragment {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
-//                textView.setVisibility(View.VISIBLE);
+
                 mProgressCircle.setVisibility(View.INVISIBLE);
             }
         });
@@ -216,35 +180,27 @@ public class Category extends Fragment {
     }
 
     private void getData(final String text) {
-//        mDatabaseRef= FirebaseDatabase.getInstance().getReference("uploads");
-//        mUploads= new ArrayList<>();
-//        mUploads.clear();
-//        mDatabaseRef= FirebaseDatabase.getInstance().getReference("uploads");
-//
-//        int columns = 2;
-//        recyclerView = categoryFragment.findViewById(R.id.category_rv);
-//        LinearLayoutManager layoutManager = new GridLayoutManager(getActivity(), columns);
-//        recyclerView.setLayoutManager(layoutManager);
+
 
         mDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 mUploads.clear();
-                for (DataSnapshot postSnapShot: snapshot.getChildren()){
-                    Upload upload= postSnapShot.getValue(Upload.class);
-//                    if (upload != null && upload.getName().contains(text))
-                        if (upload.getName()!= null && upload.getName().contains(text))
-                            mUploads.add(upload);
+                for (DataSnapshot postSnapShot : snapshot.getChildren()) {
+                    Upload upload = postSnapShot.getValue(Upload.class);
+
+                    if (upload.getName() != null && upload.getName().contains(text))
+                        mUploads.add(upload);
                 }
-                Log.d("ksfkjskf",mUploads.size()+"");
-                if (mUploads.size()> 0) {
+                Log.d("ksfkjskf", mUploads.size() + "");
+                if (mUploads.size() > 0) {
                     categrayAdapter = new CategrayAdapter(getActivity(), mUploads);
                     categrayAdapter.setOnItemClickListener(listener);
                     recyclerView.setAdapter(categrayAdapter);
                     categrayAdapter.notifyDataSetChanged();
                     textView.setVisibility(View.GONE);
                     mProgressCircle.setVisibility(View.INVISIBLE);
-                }else {
+                } else {
                     textView.setText("there is no category found ");
                     textView.setVisibility(View.VISIBLE);
                     mProgressCircle.setVisibility(View.INVISIBLE);
@@ -260,6 +216,7 @@ public class Category extends Fragment {
 
 
     }
+
     private void filter(String text) {
 
         text = text.toLowerCase();
@@ -272,61 +229,11 @@ public class Category extends Fragment {
         } else {
             getData(text);
 
-//            if ("Alphaptic".toLowerCase().contains(text.toLowerCase())) {
-//                found0 = true;
-//
-//            }
-//            if ("Number".toLowerCase().contains(text.toLowerCase())) {
-//                found1 = true;
-//
-//            }
-//
-//            if ((found0 && found1)) {
-//                createData();
-//            } else if (found0) {
-//                createData(0);
-//            } else if (found1) {
-//                createData(1);
-//            } else {
-//                createData();
-//
-//            }
 
         }
 
-//        categrayAdapter.notifyDataSetChanged();
 
     }
 
-//    public void createData() {
-//        recyclerView = categoryFragment.findViewById(R.id.category_rv);
-//        LinearLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
-//        recyclerView.setLayoutManager(layoutManager);
-//        categoryList.clear();
-//
-//
-//        categoryList.add(new CategoryItem("Alphaptic", R.drawable.ic_alphabet));
-//        categoryList.add(new CategoryItem("Number", R.drawable.ic_number));
-//        categrayAdapter = new CategrayAdapter(getActivity(), categoryList);
-//        categrayAdapter.setOnItemClickListener(listener);
-//        recyclerView.setAdapter(categrayAdapter);
-//        categrayAdapter.notifyDataSetChanged();
-//    }
-//
-//    public void createData(int type) {
-//        recyclerView = categoryFragment.findViewById(R.id.category_rv);
-//        LinearLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
-//        recyclerView.setLayoutManager(layoutManager);
-//        categoryList.clear();
-//        if (type == 0) {
-//            categoryList.add(new CategoryItem("Alphaptic", R.drawable.ic_alphabet));
-//        } else if (type == 1) {
-//            categoryList.add(new CategoryItem("Number", R.drawable.ic_number));
-//        }
-//
-//        categrayAdapter = new CategrayAdapter(getActivity(), categoryList);
-//        categrayAdapter.setOnItemClickListener(listener);
-//        recyclerView.setAdapter(categrayAdapter);
-//        categrayAdapter.notifyDataSetChanged();
-//    }
+
 }

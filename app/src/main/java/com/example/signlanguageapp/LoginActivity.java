@@ -20,7 +20,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -32,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText email_logEt, password_logEt;
     ImageView image_close_login;
     Button loginButon;
-    //    FirebaseAuth mAuth;
+
     FirebaseUser currentUser;
 
     @Override
@@ -40,8 +39,8 @@ public class LoginActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-//        mAuth = FirebaseAuth.getInstance();
-//        FirebaseUser user = mAuth.getCurrentUser();
+
+
         currentUser = MyFirebaseController.getCurrentUserId();
 
         if (currentUser != null) {
@@ -54,29 +53,7 @@ public class LoginActivity extends AppCompatActivity {
         email_logEt = findViewById(R.id.email_logEt);
         password_logEt = findViewById(R.id.password_logEt);
         loginButon = findViewById(R.id.loginButon);
-//        image_close_login = findViewById(R.id.image_close_login);
 
-//        findViewById(R.id.forgetTv).setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(LoginActivity.this, Forgot_passwordActivity.class);
-//                startActivity(intent);
-//                finish();
-//
-//            }
-//        });
-
-
-//        image_close_login.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-//                startActivity(intent);
-//                finish();
-//
-//            }
-//        });
 
         loginButon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,6 +94,13 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+       this.finishAffinity();
     }
 
     private boolean isNetworkAvailable() {

@@ -9,11 +9,11 @@
         android:id="@+id/signout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sign out"
         android:layout_gravity="end"
         android:layout_margin="16dp"
+        android:text="Sign out"
         android:textSize="16sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <ImageView
         android:layout_width="wrap_content"

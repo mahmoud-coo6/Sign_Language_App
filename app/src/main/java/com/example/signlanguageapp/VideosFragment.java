@@ -45,7 +45,7 @@ public class VideosFragment extends Fragment {
         youtubeVideos.add(new YouTubeVideos("<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/0TZPoYKkC-s\" frameborder=\"0\" allowfullscreen></iframe>"));
         youtubeVideos.add(new YouTubeVideos("<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/yToUNDce_2Y&t=3s\" frameborder=\"0\" allowfullscreen></iframe>"));
         youtubeVideos.add(new YouTubeVideos("<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/PYJhLcLda_U\" frameborder=\"0\" allowfullscreen></iframe>"));
-//        youtubeVideos.add(new YouTubeVideos("<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/uhQ7mh_o_cM\" frameborder=\"0\" allowfullscreen></iframe>"));
+
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,6 +54,7 @@ public class VideosFragment extends Fragment {
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frame_container2, new VideosFragment());
                 transaction.setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                transaction.addToBackStack(null);
                 transaction.commit();
             }
         });
