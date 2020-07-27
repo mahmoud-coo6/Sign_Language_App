@@ -33,7 +33,7 @@ public class TextFragment extends Fragment {
     RecyclerView recyclerView;
     String imageUrl;
     TextView holder;
-    int currentPosition;
+    int currentPosition=0;
     private View myTextFragment;
 
     public static void hideKeyboard(Activity activity) {
@@ -81,7 +81,10 @@ public class TextFragment extends Fragment {
 
                 hideKeyboard(getActivity());
 
-                getTextInput(v);
+                if(editText.getText() != null && editText.getText().toString().trim().length() >0){
+                    getTextInput(v);
+
+                }
             }
         });
 
@@ -103,9 +106,10 @@ public class TextFragment extends Fragment {
     }
 
     private void moveNext(View v) {
-        currentPosition += 1;
-        if (currentPosition <= textList.size() - 1) {
-            for (int i = 0; i <= textList.size() - 1; i++) {
+        if (currentPosition < textList.size()-1 && currentPosition >= 0) {
+            currentPosition++;
+
+            for (int i = 0; i < textList.size(); i++) {
                 if (currentPosition != i) {
                     holder = recyclerView.findViewHolderForAdapterPosition(i).itemView.findViewById(R.id.item);
                     holder.setBackgroundTintMode(PorterDuff.Mode.ADD);
@@ -145,8 +149,9 @@ public class TextFragment extends Fragment {
     }
 
     private void moveBack(View v) {
-        currentPosition -= 1;
-        if (currentPosition >= 0) {
+
+        if (currentPosition > 0) {
+            currentPosition--;
             for (int i = 0; i <= textList.size() - 1; i++) {
                 if (currentPosition != i) {
                     holder = recyclerView.findViewHolderForAdapterPosition(i).itemView.findViewById(R.id.item);
