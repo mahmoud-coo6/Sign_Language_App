@@ -52,8 +52,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".RecognitionActivity"></activity>
-        <activity android:name=".LoginActivity"></activity>
-        <activity android:name=".SingUp"></activity>
+        <activity android:name=".LoginActivity" android:theme="@style/AppTheme.FullScreen"></activity>
+        <activity android:name=".SingUp" android:theme="@style/AppTheme.FullScreen"></activity>
         <activity android:name=".AddCategory"></activity>
     </application>
 

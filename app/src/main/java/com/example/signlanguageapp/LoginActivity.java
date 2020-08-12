@@ -7,6 +7,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -29,8 +30,8 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
     EditText email_logEt, password_logEt;
-    ImageView image_close_login;
-    Button loginButon;
+    ImageView image_close_login, loginButon;
+//    Button loginButon;
 
     FirebaseUser currentUser;
 
@@ -40,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         currentUser = MyFirebaseController.getCurrentUserId();
 

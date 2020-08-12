@@ -7,6 +7,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -32,8 +33,8 @@ public class SingUp extends AppCompatActivity {
     private static final String TAG = "SingUp";
     EditText passwordEt, emailEt;
     TextView text_singTv;
-    ImageView image_close;
-    Button singupBt;
+    ImageView image_close, singupBt;
+//    Button singupBt;
 
     FirebaseUser currentUser;
 
@@ -44,6 +45,7 @@ public class SingUp extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_singup);
 
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         currentUser = MyFirebaseController.getCurrentUserId();
 
