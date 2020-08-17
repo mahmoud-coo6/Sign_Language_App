@@ -33,7 +33,7 @@ public class SingUp extends AppCompatActivity {
     private static final String TAG = "SingUp";
     EditText passwordEt, emailEt;
     TextView text_singTv;
-    ImageView image_close, singupBt;
+    TextView image_close, singupBt;
 //    Button singupBt;
 
     FirebaseUser currentUser;
@@ -43,7 +43,8 @@ public class SingUp extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_singup);
+//        setContentView(R.layout.activity_singup);
+        setContentView(R.layout.register);
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 

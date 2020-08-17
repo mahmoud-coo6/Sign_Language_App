@@ -13,6 +13,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,7 +21,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class TextFragment extends Fragment {
 
@@ -35,6 +38,11 @@ public class TextFragment extends Fragment {
     TextView holder;
     int currentPosition=0;
     private View myTextFragment;
+
+    char[] alphabet = "abcdefghijklmnopqrstuvwxyz ".toUpperCase().toCharArray();
+    char[] number = "0123456789".toCharArray();
+    String str= String.valueOf(alphabet).concat(String.valueOf(number));
+
 
     public static void hideKeyboard(Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
@@ -105,6 +113,7 @@ public class TextFragment extends Fragment {
         return myTextFragment;
     }
 
+
     private void moveNext(View v) {
         if (currentPosition < textList.size()-1 && currentPosition >= 0) {
             currentPosition++;
@@ -119,12 +128,20 @@ public class TextFragment extends Fragment {
             }
 
             textAdapter.notifyDataSetChanged();
-            imageUrl = "https://res.cloudinary.com/dwpo5xilm/image/upload/v1582724492/sick-fits/" + String.valueOf(editText.getText().charAt(currentPosition)).toUpperCase() + ".png";
 
-            Picasso.get().load(imageUrl).error(R.drawable.placeholder)
-                    .placeholder(R.drawable.placeholder).into(imageView);
+            if (String.valueOf(editText.getText().charAt(currentPosition))== " "){
+                imageView.setImageResource(R.drawable.transparent);
+                textView.setText("");
+                return;
+            }else {
+                imageUrl = "https://res.cloudinary.com/dwpo5xilm/image/upload/v1582724492/sick-fits/" + String.valueOf(editText.getText().charAt(currentPosition)).toUpperCase() + ".png";
 
-            textView.setText(String.valueOf(editText.getText().charAt(currentPosition)).toUpperCase());
+                Picasso.get().load(imageUrl).error(R.drawable.placeholder)
+                        .placeholder(R.drawable.placeholder).into(imageView);
+
+                textView.setText(String.valueOf(editText.getText().charAt(currentPosition)).toUpperCase());
+            }
+
             textAdapter.notifyDataSetChanged();
 
             recyclerView.postDelayed(new Runnable() {
@@ -161,17 +178,24 @@ public class TextFragment extends Fragment {
                 }
             }
 
-            textAdapter.notifyDataSetChanged();
-            imageUrl = "https://res.cloudinary.com/dwpo5xilm/image/upload/v1582724492/sick-fits/" + String.valueOf(editText.getText().charAt(currentPosition)).toUpperCase() + ".png";
-            try {
-                Picasso.get().load(imageUrl).error(R.drawable.placeholder)
-                        .placeholder(R.drawable.placeholder).into(imageView);
-            } catch (Exception e) {
+            if (String.valueOf(editText.getText().charAt(currentPosition))== " "){
+                imageView.setImageResource(R.drawable.transparent);
+                textView.setText("");
+                return;
+            }else {
 
+                textAdapter.notifyDataSetChanged();
+                imageUrl = "https://res.cloudinary.com/dwpo5xilm/image/upload/v1582724492/sick-fits/" + String.valueOf(editText.getText().charAt(currentPosition)).toUpperCase() + ".png";
+                try {
+                    Picasso.get().load(imageUrl).error(R.drawable.placeholder)
+                            .placeholder(R.drawable.placeholder).into(imageView);
+                } catch (Exception e) {
+
+                }
+
+
+                textView.setText(String.valueOf(editText.getText().charAt(currentPosition)).toUpperCase());
             }
-
-
-            textView.setText(String.valueOf(editText.getText().charAt(currentPosition)).toUpperCase());
             textAdapter.notifyDataSetChanged();
 
             recyclerView.postDelayed(new Runnable() {
@@ -197,11 +221,25 @@ public class TextFragment extends Fragment {
     private void getTextInput(View v) {
         textList.clear();
         for (int i = 0; i < editText.getText().toString().length(); i++) {
-            textList.add(String.valueOf(editText.getText().charAt(i)));
+            if((str.toLowerCase()).contains(String.valueOf(editText.getText().charAt(i)).toLowerCase())){
+                textList.add(String.valueOf(editText.getText().charAt(i)));
+            }else{
+                Toast.makeText(getActivity(), "Enter a valid character", Toast.LENGTH_SHORT).show();
+                textList.clear();
+//                recyclerView.setAdapter(null);
+//                textAdapter.notifyDataSetChanged();
+                return;
+            }
         }
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         textAdapter = new TextAdapter(getActivity(), textList);
         recyclerView.setAdapter(textAdapter);
+
+        if (String.valueOf(editText.getText().charAt(currentPosition))== " "){
+            imageView.setImageResource(R.drawable.transparent);
+            textView.setText("");
+            return;
+        }
 
         imageUrl = "https://res.cloudinary.com/dwpo5xilm/image/upload/v1582724492/sick-fits/" + String.valueOf(editText.getText().charAt(currentPosition)).toUpperCase() + ".png";
         Picasso.get().load(imageUrl).error(R.drawable.placeholder)
@@ -253,13 +291,21 @@ public class TextFragment extends Fragment {
 
         textAdapter.notifyDataSetChanged();
 
-        imageUrl = "https://res.cloudinary.com/dwpo5xilm/image/upload/v1582724492/sick-fits/" + String.valueOf(editText.getText().charAt(currentPosition)).toUpperCase() + ".png";
-        Picasso.get().load(imageUrl).error(R.drawable.placeholder)
-                .placeholder(R.drawable.placeholder).into(imageView);
+        if (String.valueOf(editText.getText().charAt(currentPosition))== " "){
+            imageView.setImageResource(R.drawable.transparent);
+            textView.setText("");
+            return;
+        }else{
+            imageUrl = "https://res.cloudinary.com/dwpo5xilm/image/upload/v1582724492/sick-fits/" + String.valueOf(editText.getText().charAt(currentPosition)).toUpperCase() + ".png";
+            Picasso.get().load(imageUrl).error(R.drawable.placeholder)
+                    .placeholder(R.drawable.placeholder).into(imageView);
 
-        textView.setText(String.valueOf(editText.getText().charAt(position)).toUpperCase());
+            textView.setText(String.valueOf(editText.getText().charAt(position)).toUpperCase());
 
-        Log.d("TAG changessfdf", "changeItem: i=" + textList.size() + " position=" + position);
+            Log.d("TAG changessfdf", "changeItem: i=" + textList.size() + " position=" + position);
+
+        }
+
 
         recyclerView.postDelayed(new Runnable() {
             @Override

@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         prefs = getSharedPreferences("com.example.signlanguageapp", MODE_PRIVATE);
 
         items = new ArrayList<SliderItem>();
-        items.add(new SliderItem("Sign Language Learning &amp; Translating", "Welcome to sign language Buy our products easily and get access to app only exclusives.", R.drawable.binocularsicon));
+        items.add(new SliderItem("Sign Language Learning and Translation", "Welcome to sign language learning and \n translation application (SLLT).", R.drawable.binocularsicon));
         items.add(new SliderItem("Dictionary", "Use the dictonary to find specific character or number", R.drawable.dictionary));
         items.add(new SliderItem("Quick Search", "Quickly find the sign you like the most.", R.drawable.search));
         items.add(new SliderItem("Recorder Sounds", "Use microphone to translate what you need", R.drawable.ic_soundlogo));

@@ -224,7 +224,7 @@ public class Dictionary extends Fragment {
     private void filter(String text) {
 
         text = text.toLowerCase();
-        Toast.makeText(getActivity(), "value: " + text, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(), "value: " + text, Toast.LENGTH_SHORT).show();
         Log.v("MyListAdapter", String.valueOf(groups.size()));
 
         if (text.isEmpty()) {

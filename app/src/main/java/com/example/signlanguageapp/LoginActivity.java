@@ -11,6 +11,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -30,7 +31,8 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
     EditText email_logEt, password_logEt;
-    ImageView image_close_login, loginButon;
+//    ImageView image_close_login;
+    TextView loginButon;
 //    Button loginButon;
 
     FirebaseUser currentUser;
@@ -39,7 +41,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+//        setContentView(R.layout.activity_login);
+        setContentView(R.layout.loginaccount);
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 

@@ -25,9 +25,10 @@ import java.util.Locale;
 public class Home extends AppCompatActivity {
 
     ImageView floatingActionButton;
-    boolean isRed = true;
-
+    boolean isblue = true;
     private ActionBar toolbar;
+    private long backPressedTime;
+    private Toast backToast;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -58,6 +59,18 @@ public class Home extends AppCompatActivity {
         }
     };
 
+    @Override
+    public void onBackPressed() {
+        if (backPressedTime + 2000 > System.currentTimeMillis()) {
+            backToast.cancel();
+            super.onBackPressed();
+            return;
+        } else {
+            backToast = Toast.makeText(getBaseContext(), "Press back again to exit", Toast.LENGTH_SHORT);
+            backToast.show();
+        }
+        backPressedTime = System.currentTimeMillis();
+    }
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,8 +108,8 @@ public class Home extends AppCompatActivity {
             path1.setFillColor(Color.GREEN);
 
 
-        } else if (color.equals("red")) {
-            path1.setFillColor(Color.RED);
+        } else if (color.equals("blue")) {
+            path1.setFillColor(Color.BLUE);
 
         }
 
@@ -124,7 +137,7 @@ public class Home extends AppCompatActivity {
         switch (requestCode) {
             case 10:
                 if (resultCode == RESULT_OK && data != null) {
-                    selectColor(floatingActionButton, "red");
+                    selectColor(floatingActionButton, "blue");
                     Bundle bundle = new Bundle();
                     ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     bundle.putString("result", result.get(0));
@@ -139,7 +152,7 @@ public class Home extends AppCompatActivity {
 
 
                 } else {
-                    selectColor(floatingActionButton, "red");
+                    selectColor(floatingActionButton, "blue");
                 }
                 break;
         }

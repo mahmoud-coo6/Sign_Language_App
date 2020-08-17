@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 import androidx.fragment.app.Fragment;
@@ -27,6 +28,8 @@ public class VideosFragment extends Fragment {
     Button button;
     Vector<YouTubeVideos> youtubeVideos = new Vector<YouTubeVideos>();
     private View myvideoFragment;
+    public static ProgressBar mProgressCircle;
+
 
 
     @Override
@@ -40,6 +43,10 @@ public class VideosFragment extends Fragment {
         button = myvideoFragment.findViewById(R.id.button);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        mProgressCircle = myvideoFragment.findViewById(R.id.progress_circle);
+        mProgressCircle.setVisibility(View.VISIBLE);
+
 
         youtubeVideos.add(new YouTubeVideos("<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/CD1c1F6Q1iY\" frameborder=\"0\" allowfullscreen></iframe>"));
         youtubeVideos.add(new YouTubeVideos("<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/kIq5w2EguTU\" frameborder=\"0\" allowfullscreen></iframe>"));
@@ -64,11 +71,10 @@ public class VideosFragment extends Fragment {
             recyclerView.setVisibility(View.VISIBLE);
             relativeLayout.setVisibility(View.GONE);
             VideoAdapter videoAdapter = new VideoAdapter(youtubeVideos);
-
             recyclerView.setAdapter(videoAdapter);
+
         } else {
             try {
-
 
                 recyclerView.setVisibility(View.GONE);
                 relativeLayout.setVisibility(View.VISIBLE);
