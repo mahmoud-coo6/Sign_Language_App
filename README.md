@@ -1,6 +1,7 @@
 # Sign Language Learning and Translation (SLLT) Application:
 
 1- Introduction: -
+
 This project involves analyzing and designing a prototyping application that automates the sign language learning operation of Palestine Authority Distributor user especially 
 the user with disability that loss hearing (Deaf). The main objective of this project is to process of communication between users especially deaf to be more effectively and
 efficiently through a Sign Language Learning and translation (SLLT) application. application will make user be able to communicate user with each other with multiple way, 
@@ -11,11 +12,14 @@ people needs to communicate with other people, specially people with disability 
 This application will make communication easier, and efficient between people especially deaf.
 
 2- System Problem: -
+
 "deaf" are people can't hear other voice and need a way to communicate with other people to able to understand others and contract with him.
 How can you learn and how to use sign language to communicate with other individuals who are deaf or hard of hearing at home?
 Using our application provide chance to use mobile application it allows the use to learn and translate sign language accurately by know each character and it correspond sign language signal. It provides services associated with engagement and interaction and ease communication with deaf. It solves problem that face people in communication process especially with deaf. Allow the user to install application on their smartphone and ability to use the service directly.
+There are 15,000 deaf people in Gaza out of a population of 1.8 million, according to the census in 2014, and poverty continues, and contribute back to underserved populations in the Palestine as Gaza that struggle every day to sustain a family that have person/s with disability like deaf, and who do not have as much scope or communication channel for interaction as other regular groups. The Software System project I want to accomplish throughout my career.
 
 3- System Goal: -
+
 1. To educate and understand a sign language easier, faster and more efficiently.
 2. Ease of follow-up sign language by learn and translate it.
 3. The user can access application from any mobile with Android OS
@@ -24,4 +28,7 @@ Using our application provide chance to use mobile application it allows the use
 6. Allow user to able to be communication with deaf with more flexibility and simplicity.
 
 4- User interface: -
-![alt text](https://burgerhout.org/content/images/2018/12/sharingacrosssubs.png)
+![alt text](https://i.ibb.co/hB62Mym/Screenshot-2020-12-19-180636.png)
+![alt text](https://i.ibb.co/NV9rVVG/Screenshot-2020-12-19-180710.png)
+
+You can download Android Application from this Link: [SLLT_Application](https://drive.google.com/file/d/1Hbe1C9QsonMoDCK051rNMnIjkaHKYJjJ/view?usp=sharing)
