@@ -87,7 +87,7 @@ public class Category extends Fragment {
                 Log.d("TAG cliksfsdfas" + position, "onItemClick: ");
                 Intent intent;
 
-                Fragment fragment = new CategoryList();
+                CategoryList fragment = new CategoryList();
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 Bundle bundle = new Bundle();
                 bundle.putInt("item", position);
@@ -117,7 +117,7 @@ public class Category extends Fragment {
             public void onClick(View v) {
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frame_container, new AddCategory());
-                transaction.addToBackStack(null);
+//                transaction.addToBackStack(null);
                 transaction.commit();
             }
         });
@@ -154,7 +154,6 @@ public class Category extends Fragment {
                     if (upload.getName() != null && upload.getName().trim().length() != 0)
                         mUploads.add(upload);
                 }
-                Log.d("ksfkjskf", mUploads.size() + "");
                 if (mUploads.size() > 0) {
                     categrayAdapter = new CategrayAdapter(getActivity(), mUploads);
                     categrayAdapter.setOnItemClickListener(listener);
@@ -189,7 +188,7 @@ public class Category extends Fragment {
                 for (DataSnapshot postSnapShot : snapshot.getChildren()) {
                     Upload upload = postSnapShot.getValue(Upload.class);
 
-                    if (upload.getName() != null && upload.getName().contains(text))
+                    if (upload.getName() != null && upload.getName().toLowerCase().contains(text.toLowerCase()))
                         mUploads.add(upload);
                 }
                 Log.d("ksfkjskf", mUploads.size() + "");

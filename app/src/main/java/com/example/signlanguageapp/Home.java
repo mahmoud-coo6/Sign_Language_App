@@ -147,7 +147,7 @@ public class Home extends AppCompatActivity {
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.frame_container, textFragment);
                     transaction.setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                    transaction.addToBackStack(null);
+//                    transaction.addToBackStack(null);
                     transaction.commit();
 
 
@@ -165,7 +165,7 @@ public class Home extends AppCompatActivity {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_container, fragment);
         transaction.setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        transaction.addToBackStack(null);
+//        transaction.addToBackStack(null);
         transaction.commit();
     }
 

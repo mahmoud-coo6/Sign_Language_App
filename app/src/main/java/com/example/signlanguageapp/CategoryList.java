@@ -77,6 +77,7 @@ public class CategoryList extends Fragment {
         mUploads = new ArrayList<>();
         mUploads.clear();
 
+//        getData();
 
         listView = categoryListFragment.findViewById(R.id.dictionary_elv);
 
@@ -108,7 +109,7 @@ public class CategoryList extends Fragment {
                 Fragment fragment = new Category();
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frame_container, fragment);
-                transaction.addToBackStack(null);
+//                transaction.addToBackStack(null);
                 transaction.setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
 
                 transaction.commit();
@@ -125,7 +126,7 @@ public class CategoryList extends Fragment {
                 bundle.putString("name", name);
                 fragment.setArguments(bundle);
                 transaction.replace(R.id.frame_container, fragment);
-                transaction.addToBackStack(null);
+//                transaction.addToBackStack(null);
                 transaction.commit();
             }
         });
@@ -176,8 +177,9 @@ public class CategoryList extends Fragment {
                     Log.d("jjdjdfjt", mUploads.size() + "");
 
                     adapter = new MyExpandableListAdapter(getActivity(), groups);
+                    adapter.notifyDataSetChanged();
                     listView.setAdapter(adapter);
-
+                    adapter.notifyDataSetChanged();
 
                     textView.setVisibility(View.GONE);
                     progressBar.setVisibility(View.INVISIBLE);
@@ -219,7 +221,7 @@ public class CategoryList extends Fragment {
 
                 for (DataSnapshot postSnapShot : snapshot.getChildren()) {
                     Upload upload = postSnapShot.getValue(Upload.class);
-                    if (upload.getName() != null && upload.getName().contains(text)) {
+                    if (upload.getName() != null && (upload.getName().toLowerCase()).contains(text.toLowerCase())) {
                         mUploads.add(upload);
 
 
@@ -239,7 +241,7 @@ public class CategoryList extends Fragment {
 
                     adapter = new MyExpandableListAdapter(getActivity(), groups);
                     listView.setAdapter(adapter);
-
+                    adapter.notifyDataSetChanged();
 
                     textView.setVisibility(View.GONE);
                     progressBar.setVisibility(View.INVISIBLE);
@@ -256,6 +258,8 @@ public class CategoryList extends Fragment {
 
                     adapter = new MyExpandableListAdapter(getActivity(), groups);
                     listView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                    Toast.makeText(getActivity(), "there is no item/s found in " + name, Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.INVISIBLE);
                 }
 

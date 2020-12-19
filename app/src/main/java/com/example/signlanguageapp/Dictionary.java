@@ -115,8 +115,11 @@ public class Dictionary extends Fragment {
                                 groups.append(index, group);
                                 Log.d("jjdjdfjt", mUploads2.size() + "");
 
-                                myadapter = new MyExpandableListAdapter(getActivity(), groups);
-                                listView.setAdapter(myadapter);
+                                if (getActivity() != null) {
+                                    myadapter = new MyExpandableListAdapter(getActivity(), groups);
+                                    listView.setAdapter(myadapter);
+                                }
+
                                 progressBar.setVisibility(View.INVISIBLE);
                                 textView.setVisibility(View.GONE);
                             } else {
@@ -159,9 +162,12 @@ public class Dictionary extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 mUploads.clear();
+//                Group group;
+
                 for (DataSnapshot postSnapShot : snapshot.getChildren()) {
                     Upload upload = postSnapShot.getValue(Upload.class);
-                    if (upload.getName() != null && upload.getName().trim().length() != 0)
+//                    if (upload.getName() != null && upload.getName().trim().length() != 0)
+                    if (upload.getName() != null && (upload.getName().toLowerCase()).contains(text.toLowerCase()))
                         mUploads.add(upload);
                 }
                 for (int i = 0; i < mUploads.size(); i++) {
@@ -176,7 +182,8 @@ public class Dictionary extends Fragment {
 
                             for (DataSnapshot postSnapShot : snapshot.getChildren()) {
                                 Upload upload = postSnapShot.getValue(Upload.class);
-                                if (upload.getName() != null && upload.getName().contains(text))
+//                                if (upload.getName() != null && upload.getName().contains(text))
+                                if (upload.getName() != null && (upload.getName().toLowerCase()).contains(text.toLowerCase()))
                                     mUploads2.add(upload);
                             }
                             if (mUploads2.size() > 0) {
@@ -187,6 +194,7 @@ public class Dictionary extends Fragment {
 
                                 myadapter = new MyExpandableListAdapter(getActivity(), groups);
                                 listView.setAdapter(myadapter);
+                                myadapter.notifyDataSetChanged();
 
                                 progressBar.setVisibility(View.INVISIBLE);
                             } else {
@@ -199,7 +207,8 @@ public class Dictionary extends Fragment {
 
                                 myadapter = new MyExpandableListAdapter(getActivity(), groups);
                                 listView.setAdapter(myadapter);
-
+                                myadapter.notifyDataSetChanged();
+                                Toast.makeText(getActivity(), "there is no item/s found in dictionary", Toast.LENGTH_SHORT).show();
                                 progressBar.setVisibility(View.INVISIBLE);
                             }
                         }

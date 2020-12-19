@@ -53,19 +53,22 @@
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:orientation="vertical"
         android:paddingStart="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/header_divider">
+        app:layout_constraintTop_toBottomOf="@id/header_divider"
+        app:layout_constraintVertical_bias="1.0"
+        android:layout_marginBottom="56dp">
 
 
         <ExpandableListView
             android:id="@+id/dictionary_elv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="135dp" />
+            android:layout_height="match_parent" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <ProgressBar

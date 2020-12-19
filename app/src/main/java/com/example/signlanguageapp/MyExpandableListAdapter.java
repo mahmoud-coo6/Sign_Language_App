@@ -74,7 +74,7 @@ public class MyExpandableListAdapter extends BaseExpandableListAdapter {
 
 
                 transaction.replace(R.id.frame_container, searchResult);
-                transaction.setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                transaction.setTransitionStyle(transaction.TRANSIT_FRAGMENT_FADE);
 //                transaction.addToBackStack(null);
                 transaction.commit();
             }

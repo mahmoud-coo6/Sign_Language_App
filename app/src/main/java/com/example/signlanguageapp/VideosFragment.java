@@ -62,7 +62,7 @@ public class VideosFragment extends Fragment {
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frame_container2, new VideosFragment());
                 transaction.setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                transaction.addToBackStack(null);
+//                transaction.addToBackStack(null);
                 transaction.commit();
             }
         });
